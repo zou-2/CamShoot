@@ -804,8 +804,8 @@ class Ui_MainWindow(object):
 ###############################################################################################################
 ###############################################################################################################
 
-        self.BtnCharger.clicked.connect(self.Insert)
-        self.BtnAjouter.clicked.connect(self.loadImage)
+        self.BtnCharger.clicked.connect(self.loadImage)
+        self.BtnAjouter.clicked.connect(self.Insert)
         #self.BtnCharger.clicked.connect(self.showTableData)
         self.showTableData()
     # setupUi
