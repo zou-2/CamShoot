@@ -804,28 +804,43 @@ class Ui_MainWindow(object):
 ###############################################################################################################
 ###############################################################################################################
 
-        self.BtnCharger.clicked.connect(self.loadImage)
+        self.BtnCharger.clicked.connect(self.LoadImage)
         self.BtnAjouter.clicked.connect(self.Insert)
-        #self.BtnCharger.clicked.connect(self.showTableData)
+        self.BtnModif.clicked.connect(self.Modifier)
+        self.BtnSupp.clicked.connect(self.Supprimer)
+        #self.BtnRecherche.clicked.connect(self.Rechercher)
         self.showTableData()
     # setupUi
-
+    
     ###################################################################################################################
-################################################SHOW TABLE#########################################################    
-    def showTableData(self):
+    ################################################ FONCTION CONNEXION ######################################################### 
+    
+    def connexion(self, requette):
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
-        cur.execute(" select * from Personnes ")
+        cur.execute(requette)
         con.commit()
-        RqtResult = cur.fetchall()
+        RqtRes = cur.fetchall()
+        con.close()
+        return RqtRes
+
+    ###################################################################################################################
+    ################################################SHOW TABLE#########################################################    
+    def showTableData(self):
+        # connexion à la base de données
+        RqtResult = self.connexion("select * from Personnes")
+        print(RqtResult)
         for row_number, row_data in enumerate(RqtResult):
             self.table.insertRow(row_number)
+            print(row_number)
+            print(row_data)
+            print(RqtResult)
             for column_number, column_data in enumerate(row_data):
                 item = str(column_data)
-                if(column_number != 0):
-                    self.table.setItem(row_number, column_number, QTableWidgetItem(item))
-        con.close()
+                #if(column_number != 0):
+                self.table.setItem(row_number, column_number, QTableWidgetItem(item))
+        
     
 ############################################################INSERT##########################################################
 ############################################################################################################################
@@ -839,14 +854,10 @@ class Ui_MainWindow(object):
         mail = self.input_mail.text()
         adresse = self.input_adresse.text()
         
-
+        selected_items = self.table.selectedItems()
         # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse))
-        con.commit()
-        RqtResult = cur.fetchall()
-        con.close()
+        #RqtResult = self.connexion(self,"insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse,))
+        
         self.input_id_pers.setText("")
         self.input_nom.setText("")
         self.input_prenom.setText("")
@@ -854,13 +865,39 @@ class Ui_MainWindow(object):
         self.input_telephone.setText("")
         self.input_mail.setText("")
         self.input_adresse.setText("")
+        
+    ############################################################ EDIT ##########################################################
+    ############################################################################################################################
+    ############################################################################################################################
+    
+    def Modifier(self):
+        identifiant = self.input_id_pers.text()
+        nom = self.input_nom.text()
+        prenom = self.input_prenom.text()
+        photo = self.input_photo.text()
+        telephone = self.input_telephone.text()
+        mail = self.input_mail.text()
+        adresse = self.input_adresse.text()
+
+        # connexion à la base de données
+        RqtResult = self.connexion(self,"insert into Personnes (identifiant, nom, prenom, photo, telephone, mail, adresse) values (?,?,?,?,?,?,?)", (identifiant, nom, prenom, photo, telephone, mail, adresse, codeSelectionner))
+
+    ############################################################ DELETE ##########################################################
+    ############################################################################################################################
+    ############################################################################################################################
+
+    def Supprimer(self):
+        selected_items = self.table.selectedItems()
+        print(selected_items.text())
+        RqtResult = self.connexion(self,"delete from patient where Identifiant = ?",selected_items.text())
+        self.table.delete(selected_items)
        
         
     
 ####################################################################################################################
 
 ################################################LOAD IMAGE##########################################################
-    def loadImage(self):   
+    def LoadImage(self):   
         FileName = QFileDialog.getOpenFileName(self.parent, 'open file','E:\Photo_nathan\Albert.jpg')
         self.input_photo.setText(FileName[0])
         
