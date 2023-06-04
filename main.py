@@ -3,6 +3,18 @@ import os
 import sys
 from ui_Principal import *
 
+# import os
+# import sys
+
+# # Obtenez le chemin absolu du dossier parent du fichier en cours d'exécution
+# chemin_parent = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+# # Ajoutez le chemin absolu du dossier parent au chemin de recherche des modules
+# chemin_facial = os.path.join(chemin_parent, "facial")
+# sys.path.append(chemin_facial)
+
+# import facial.Get_BD
+
 # IMPORT Custom widgets
 from Custom_Widgets.Widgets import *
 
@@ -41,8 +53,6 @@ class MainWindow(QMainWindow):
        
        # CLOSE RIGHT MENU WIDGET SIZE
         self.ui.closeNotificationBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
-
-    
 
 
 ########################################################################

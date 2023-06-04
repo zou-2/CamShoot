@@ -1,30 +1,46 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'PrincipaljMhEPv.ui'
+## Form generated from reading UI file 'PrincipaloenFVF.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+# Importez le module model_singleton du dossier services
+# from facial.logic.face_detector import face_detector
+
+# from facial.services import model_singleton
+# sys.path.append('/SUBLIME/facial')
+
+import sys
+from PIL import Image
+from keras.models import load_model
+import numpy as np
+from numpy import asarray
+from numpy import expand_dims
+import pickle
+import cv2
+import sqlite3
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
-
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
-import sqlite3
-from PyQt5.QtWidgets import QFileDialog
-#from PyQt5 import QtWidgets
+# from facial.services.model_singleton import ModelSingleton
+# from facial.logic.face_detector import face_detector
+# from services.model_singleton import ModelSingleton
+
 
 import resources_rc
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(877, 494)
+        MainWindow.resize(853, 494)
         MainWindow.setStyleSheet(u"*{\n"
 "	border: none;\n"
 "	background-color: transparent;\n"
@@ -203,7 +219,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.leftMenuSubContainer)
 
 
-        self.horizontalLayout.addWidget(self.leftMenuContainer, 0, Qt.AlignLeft)
+        self.horizontalLayout.addWidget(self.leftMenuContainer)
 
         self.centerMenuContainer = QCustomSlideMenu(self.centralwidget)
         self.centerMenuContainer.setObjectName(u"centerMenuContainer")
@@ -493,20 +509,39 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.BtnSupp = QPushButton(self.widget)
         self.BtnSupp.setObjectName(u"BtnSupp")
-        self.BtnSupp.setGeometry(QRect(140, 20, 201, 41))
+        self.BtnSupp.setGeometry(QRect(250, 20, 201, 41))
         font4 = QFont()
         font4.setPointSize(16)
         self.BtnSupp.setFont(font4)
         self.BtnSupp.setStyleSheet(u"border-radius: 5px;\n"
 "background: #FF0000;\n"
 "color: white;")
+        icon14 = QIcon()
+        icon14.addFile(u":/icons/trash-2.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnSupp.setIcon(icon14)
+        self.BtnSupp.setIconSize(QSize(24, 24))
         self.BtnModif = QPushButton(self.widget)
         self.BtnModif.setObjectName(u"BtnModif")
-        self.BtnModif.setGeometry(QRect(360, 20, 201, 41))
+        self.BtnModif.setGeometry(QRect(480, 20, 201, 41))
         self.BtnModif.setFont(font4)
         self.BtnModif.setStyleSheet(u"border-radius: 5px;\n"
 "background: #0080ff;\n"
 "color: white;")
+        icon15 = QIcon()
+        icon15.addFile(u":/icons/edit.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnModif.setIcon(icon15)
+        self.BtnModif.setIconSize(QSize(24, 24))
+        self.BtnActualiser = QPushButton(self.widget)
+        self.BtnActualiser.setObjectName(u"BtnActualiser")
+        self.BtnActualiser.setGeometry(QRect(20, 20, 201, 41))
+        self.BtnActualiser.setFont(font4)
+        self.BtnActualiser.setStyleSheet(u"border-radius: 5px;\n"
+"background: gray;\n"
+"color: white;")
+        icon16 = QIcon()
+        icon16.addFile(u":/icons/refresh-cw.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnActualiser.setIcon(icon16)
+        self.BtnActualiser.setIconSize(QSize(24, 24))
         self.barRecherche = QWidget(self.page_gestion)
         self.barRecherche.setObjectName(u"barRecherche")
         self.barRecherche.setGeometry(QRect(450, 80, 701, 61))
@@ -514,17 +549,26 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.input_Recherche = QLineEdit(self.barRecherche)
         self.input_Recherche.setObjectName(u"input_Recherche")
-        self.input_Recherche.setGeometry(QRect(240, 10, 431, 41))
+        self.input_Recherche.setGeometry(QRect(240, 10, 441, 41))
         self.input_Recherche.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.BtnRecherche = QPushButton(self.barRecherche)
         self.BtnRecherche.setObjectName(u"BtnRecherche")
         self.BtnRecherche.setGeometry(QRect(20, 10, 201, 41))
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.BtnRecherche.sizePolicy().hasHeightForWidth())
+        self.BtnRecherche.setSizePolicy(sizePolicy4)
         self.BtnRecherche.setFont(font4)
         self.BtnRecherche.setStyleSheet(u"border-radius: 5px;\n"
 "background: green;\n"
 "color: white;")
+        icon17 = QIcon()
+        icon17.addFile(u":/icons/search.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnRecherche.setIcon(icon17)
+        self.BtnRecherche.setIconSize(QSize(24, 24))
         self.table = QTableWidget(self.page_gestion)
         if (self.table.columnCount() < 7):
             self.table.setColumnCount(7)
@@ -569,43 +613,43 @@ class Ui_MainWindow(object):
 "border-radius: 5px;")
         self.input_id_pers = QLineEdit(self.panel_Rec)
         self.input_id_pers.setObjectName(u"input_id_pers")
-        self.input_id_pers.setGeometry(QRect(70, 20, 201, 31))
+        self.input_id_pers.setGeometry(QRect(60, 20, 241, 31))
         self.input_id_pers.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_nom = QLineEdit(self.panel_Rec)
         self.input_nom.setObjectName(u"input_nom")
-        self.input_nom.setGeometry(QRect(70, 70, 201, 31))
+        self.input_nom.setGeometry(QRect(60, 70, 241, 31))
         self.input_nom.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_prenom = QLineEdit(self.panel_Rec)
         self.input_prenom.setObjectName(u"input_prenom")
-        self.input_prenom.setGeometry(QRect(70, 120, 201, 31))
+        self.input_prenom.setGeometry(QRect(60, 120, 241, 31))
         self.input_prenom.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_photo = QLineEdit(self.panel_Rec)
         self.input_photo.setObjectName(u"input_photo")
-        self.input_photo.setGeometry(QRect(70, 170, 111, 31))
+        self.input_photo.setGeometry(QRect(60, 170, 131, 31))
         self.input_photo.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_telephone = QLineEdit(self.panel_Rec)
         self.input_telephone.setObjectName(u"input_telephone")
-        self.input_telephone.setGeometry(QRect(70, 220, 201, 31))
+        self.input_telephone.setGeometry(QRect(60, 220, 241, 31))
         self.input_telephone.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_mail = QLineEdit(self.panel_Rec)
         self.input_mail.setObjectName(u"input_mail")
-        self.input_mail.setGeometry(QRect(70, 270, 201, 31))
+        self.input_mail.setGeometry(QRect(60, 270, 241, 31))
         self.input_mail.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_adresse = QLineEdit(self.panel_Rec)
         self.input_adresse.setObjectName(u"input_adresse")
-        self.input_adresse.setGeometry(QRect(70, 320, 201, 31))
+        self.input_adresse.setGeometry(QRect(60, 320, 241, 31))
         self.input_adresse.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
@@ -616,12 +660,20 @@ class Ui_MainWindow(object):
         self.BtnAjouter.setStyleSheet(u"border-radius: 5px;\n"
 "background: #00ff00;\n"
 "color: white;")
+        icon18 = QIcon()
+        icon18.addFile(u":/icons/file-text.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnAjouter.setIcon(icon18)
+        self.BtnAjouter.setIconSize(QSize(24, 24))
         self.BtnCharger = QPushButton(self.panel_Rec)
         self.BtnCharger.setObjectName(u"BtnCharger")
-        self.BtnCharger.setGeometry(QRect(190, 170, 81, 31))
+        self.BtnCharger.setGeometry(QRect(200, 170, 101, 31))
         self.BtnCharger.setStyleSheet(u"background: gray;\n"
 "color: white;\n"
 "")
+        icon19 = QIcon()
+        icon19.addFile(u":/icons/image.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnCharger.setIcon(icon19)
+        self.BtnCharger.setIconSize(QSize(16, 16))
         self.mainPages.addWidget(self.page_gestion)
 
         self.verticalLayout_15.addWidget(self.mainPages)
@@ -730,11 +782,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.label_12 = QLabel(self.frame_9)
         self.label_12.setObjectName(u"label_12")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
-        self.label_12.setSizePolicy(sizePolicy4)
+        sizePolicy5 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.label_12.sizePolicy().hasHeightForWidth())
+        self.label_12.setSizePolicy(sizePolicy5)
         font6 = QFont()
         font6.setPointSize(8)
         self.label_12.setFont(font6)
@@ -744,9 +796,9 @@ class Ui_MainWindow(object):
 
         self.closeNotificationBtn = QPushButton(self.frame_9)
         self.closeNotificationBtn.setObjectName(u"closeNotificationBtn")
-        icon14 = QIcon()
-        icon14.addFile(u":/icons/x-octagon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.closeNotificationBtn.setIcon(icon14)
+        icon20 = QIcon()
+        icon20.addFile(u":/icons/x-octagon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.closeNotificationBtn.setIcon(icon20)
         self.closeNotificationBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_10.addWidget(self.closeNotificationBtn, 0, Qt.AlignRight)
@@ -804,44 +856,165 @@ class Ui_MainWindow(object):
 ###############################################################################################################
 ###############################################################################################################
 
-        self.BtnCharger.clicked.connect(self.LoadImage)
-        self.BtnAjouter.clicked.connect(self.Insert)
-        self.BtnModif.clicked.connect(self.Modifier)
-        self.BtnSupp.clicked.connect(self.Supprimer)
-        #self.BtnRecherche.clicked.connect(self.Rechercher)
+        self.BtnCharger.clicked.connect(self.loadImage)
+        self.BtnAjouter.clicked.connect(self.insert)
+        self.BtnModif.clicked.connect(self.edit)
+        self.BtnSupp.clicked.connect(self.delete)
+        self.table.cellClicked.connect(self.handle_cell_clicked)
+        self.BtnRecherche.clicked.connect(self.search)
+        self.ligne = self.table.cellClicked.connect(self.on_cell_clicked)
+        self.BtnActualiser.clicked.connect(self.reflesh)
+        
         self.showTableData()
+        # self.getFace()
     # setupUi
     
     ###################################################################################################################
-    ################################################ FONCTION CONNEXION ######################################################### 
+    ############################################### FACE RECOGNITION ########################################################
     
-    def connexion(self,requette):
+#     def getFace(self):
+#         ModelSingleton.get_instance("./facenet_keras_weights.h5")
+#         # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+#         HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
+#         #MyFaceNet = load_model("facenet_keras.h5")
+
+
+#         myfile = open("data.pkl", "rb")
+#         database = pickle.load(myfile)
+#         myfile.close()
+
+#         cap = cv2.VideoCapture(0)
+
+#         while (1):
+#             _, gbr1 = cap.read()
+
+#             wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
+
+#             if len(wajah) > 0:
+#                 x1, y1, width, height = wajah[0]
+#             else:
+#                 x1, y1, width, height = 1, 1, 10, 10
+
+#             x1, y1 = abs(x1), abs(y1)
+#             x2, y2 = x1 + width, y1 + height
+
+#             gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
+#             gbr = Image.fromarray(gbr)  # conversion OpenCV ho PIL
+#             gbr_array = asarray(gbr)
+
+#             face = gbr_array[y1:y2, x1:x2]
+
+#             face = Image.fromarray(face)
+#             face = face.resize((160, 160))
+#             face = asarray(face)
+
+#             face = face.astype('float32')
+#             mean, std = face.mean(), face.std()
+#             face = (face - mean) / std
+
+#             #face = expand_dims(face, axis=0)
+#             #signature = MyFaceNet.predict(face)
+
+#             signature = face_detector(face)
+
+#             min_dist = 100
+#             identity = ' '
+
+#             for key, value in database.items():
+#                 dist = np.linalg.norm(value - signature)
+#                 if dist < min_dist:
+#                     min_dist = dist
+#                     color = (0, 255, 0)
+#                     # identity = f"{key} {min_dist}"
+#                     identity = f"{key} : {min_dist}"
+#                 else:
+#                     color = (0 , 0 , 255)
+
+#             cv2.putText(gbr1, identity, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
+#             cv2.rectangle(gbr1, (x1, y1), (x2, y2), (color), 2)
+
+#             cv2.imshow('res', gbr1)
+
+#             k = cv2.waitKey(5) & 0xFF
+#             if k == 27:
+#                 break
+
+#         cv2.destroyAllWindows()
+#         cap.release()
+    
+    ###################################################################################################################
+    ############################################### SHOW TABLE ########################################################    
+    def showTableData(self):
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
-        cur.execute(requette)
+        cur.execute("select * from Personnes")
         con.commit()
-        RqtRes = cur.fetchall()
-        con.close()
-        return RqtRes
-
-    ###################################################################################################################
-    ################################################SHOW TABLE#########################################################    
-    def showTableData(self):
-        # connexion à la base de données
-        RqtResult = self.connexion("select * from Personnes")
+        RqtResult = cur.fetchall()
+        self.table.clearContents()
+        self.table.setRowCount(0)
         for row_number, row_data in enumerate(RqtResult):
             self.table.insertRow(row_number)
             for column_number, column_data in enumerate(row_data):
                 item = str(column_data)
                 #if(column_number != 0):
                 self.table.setItem(row_number, column_number, QTableWidgetItem(item))
-        
+        con.close()
     
-############################################################INSERT##########################################################
+    #######################################################################################################
+    ############################################### SEARCH ################################################
+    def search(self):
+        #print("test:",self.input_Recherche.text())
+        id = self.input_Recherche.text()
+       
+        for row_number in range(self.table.rowCount()):
+            found = False
+            for column_number in range(self.table.columnCount()):
+                item = self.table.item(row_number, column_number)
+                if item and id in item.text():
+                    found = True
+                    break
+            if found:
+                self.table.showRow(row_number)
+            else:
+                self.table.hideRow(row_number)
+                
+        if self.table.rowCount() == 0:
+            QMessageBox.information(self, "Information", "Aucune ligne trouvée avec la recherche : {}".format(id))
+
+    ###################################################################################################################
+    ############################################### handle_cell_clicked ########################################################
+    
+    def  handle_cell_clicked(self,row, column):
+        identifiant = self.table.item(row,0).text()
+        photo = self.table.item(row,1).text()
+        nom = self.table.item(row,2).text()
+        prenom = self.table.item(row,3).text()
+        mail = self.table.item(row,4).text()
+        telephone = self.table.item(row,5).text()
+        adresse =self.table.item(row,6).text()
+        ohatra = self.table.item(row,6).text()
+        
+        #desplacement données
+        self.input_id_pers.setText(identifiant)
+        self.input_nom.setText(nom)
+        self.input_prenom.setText(prenom)
+        self.input_photo.setText(photo)
+        self.input_mail.setText(mail)
+        self.input_telephone.setText(telephone)
+        self.input_adresse.setText(adresse)
+        self.input_adresse.setText(ohatra)
+    
+    #fonction recuperant ligne table    
+    def on_cell_clicked(self, row):
+        return row
+    #fonction actualisant la table    
+    def reflesh(self):
+        self.showTableData()
+########################################################### INSERT #########################################################
 ############################################################################################################################
 ############################################################################################################################
-    def Insert(self):
+    def insert(self):
         identifiant = self.input_id_pers.text()
         nom = self.input_nom.text()
         prenom = self.input_prenom.text()
@@ -850,19 +1023,42 @@ class Ui_MainWindow(object):
         mail = self.input_mail.text()
         adresse = self.input_adresse.text()
         
-        #param2 = "insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse)
+
         # connexion à la base de données
-        #con = sqlite3.connect('CamShoot.db')
-        #cur = con.cursor()
-        #cur.execute(requette)
-        #cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse))
-        #con.commit()
-        #RqtRes = cur.fetchall()
-        #con.close()
-        concat = "insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values("+identifiant +","+ photo +","+ nom +","+ prenom  +","+ mail +","+ telephone +","+ adresse+")"
-        str(concat)
-        print(concat)
-        RqtResult = self.connexion(self,concat)
+        con = sqlite3.connect('CamShoot.db')
+        cur = con.cursor()
+        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse))
+        con.commit()   
+        #RqtResult = cur.fetchall()
+        con.close()
+        self.input_id_pers.setText("")
+        self.input_nom.setText("")
+        self.input_prenom.setText("")
+        self.input_photo.setText("")
+        self.input_telephone.setText("")
+        self.input_mail.setText("")
+        self.input_adresse.setText("")
+        self.showTableData()
+        
+    ############################################################ EDIT ##########################################################
+    ############################################################################################################################
+    ############################################################################################################################
+    def edit(self):
+        identifiant = self.input_id_pers.text()
+        photo = self.input_photo.text()
+        nom = self.input_nom.text()
+        prenom = self.input_prenom.text()
+        telephone = self.input_telephone.text()
+        mail = self.input_mail.text()
+        adresse = self.input_adresse.text()
+        print(identifiant)
+        # connexion à la base de données
+        con = sqlite3.connect('CamShoot.db')
+        cur = con.cursor()
+        cur.execute("update Personnes set id_Pers=?,photo=?,nom=?,prenom=?,mail=?,telephone=?,adresse=? where id_Pers=?",
+            (identifiant, photo, nom, prenom, mail, telephone, adresse,identifiant))
+        con.commit()
+        con.close()
         
         self.input_id_pers.setText("")
         self.input_nom.setText("")
@@ -871,43 +1067,41 @@ class Ui_MainWindow(object):
         self.input_telephone.setText("")
         self.input_mail.setText("")
         self.input_adresse.setText("")
+        self.showTableData()   
         
-    ############################################################ EDIT ##########################################################
-    ############################################################################################################################
-    ############################################################################################################################
     
-    def Modifier(self):
-        identifiant = self.input_id_pers.text()
-        nom = self.input_nom.text()
-        prenom = self.input_prenom.text()
-        photo = self.input_photo.text()
-        telephone = self.input_telephone.text()
-        mail = self.input_mail.text()
-        adresse = self.input_adresse.text()
-
-        # connexion à la base de données
-        RqtResult = self.connexion(self,"insert into Personnes (identifiant, nom, prenom, photo, telephone, mail, adresse) values (?,?,?,?,?,?,?)", (identifiant, nom, prenom, photo, telephone, mail, adresse, codeSelectionner))
 
     ############################################################ DELETE ##########################################################
     ############################################################################################################################
     ############################################################################################################################
-
-    def Supprimer(self):
-        selected_items = self.table.selectedItems()
-        print(selected_items.text())
-        RqtResult = self.connexion(self,"delete from patient where Identifiant = ?",selected_items.text())
-        self.table.delete(selected_items)
-       
         
+    def delete(self):
+        
+        identifiant = self.input_id_pers.text()
+        # connexion à la base de données
+        con = sqlite3.connect('CamShoot.db')
+        cur = con.cursor()
+        cur.execute("delete from Personnes where id_Pers = ?",(identifiant,))
+        con.commit()   
+        con.close()
+            
+        self.input_id_pers.setText("")
+        self.input_nom.setText("")
+        self.input_prenom.setText("")
+        self.input_photo.setText("")
+        self.input_telephone.setText("")
+        self.input_mail.setText("")
+        self.input_adresse.setText("")
+        self.showTableData()
     
 ####################################################################################################################
 
 ################################################LOAD IMAGE##########################################################
-    def LoadImage(self):   
-        FileName = QFileDialog.getOpenFileName(self.parent, 'open file','E:\Photo_nathan\Albert.jpg')
+    def loadImage(self):   
+        FileName = QFileDialog.getOpenFileName(None, 'open file','E:\Photo_nathan\Albert.jpg')
         self.input_photo.setText(FileName[0])
-        
-        
+        #fileName = QFileDialog.getOpenFileName( self ,( "Ouvrir Image" ) , "E:\Photo_nathan\Albert.jpg" , ( "Image Files (*.png *.jpg *.bmp)" ))
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
 #if QT_CONFIG(tooltip)
@@ -976,7 +1170,8 @@ class Ui_MainWindow(object):
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels", None))
         self.BtnSupp.setText(QCoreApplication.translate("MainWindow", u"Supprimer", None))
         self.BtnModif.setText(QCoreApplication.translate("MainWindow", u"Modifier", None))
-        self.input_Recherche.setPlaceholderText(QCoreApplication.translate("MainWindow", u"entrer Id", None))
+        self.BtnActualiser.setText(QCoreApplication.translate("MainWindow", u"Actualiser", None))
+        self.input_Recherche.setPlaceholderText(QCoreApplication.translate("MainWindow", u"recherchez ici", None))
         self.BtnRecherche.setText(QCoreApplication.translate("MainWindow", u"Rechercher", None))
         ___qtablewidgetitem = self.table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Identifiant", None));
