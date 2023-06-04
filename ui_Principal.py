@@ -815,7 +815,7 @@ class Ui_MainWindow(object):
     ###################################################################################################################
     ################################################ FONCTION CONNEXION ######################################################### 
     
-    def connexion(self, requette):
+    def connexion(self,requette):
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
@@ -830,12 +830,8 @@ class Ui_MainWindow(object):
     def showTableData(self):
         # connexion à la base de données
         RqtResult = self.connexion("select * from Personnes")
-        print(RqtResult)
         for row_number, row_data in enumerate(RqtResult):
             self.table.insertRow(row_number)
-            print(row_number)
-            print(row_data)
-            print(RqtResult)
             for column_number, column_data in enumerate(row_data):
                 item = str(column_data)
                 #if(column_number != 0):
@@ -854,9 +850,19 @@ class Ui_MainWindow(object):
         mail = self.input_mail.text()
         adresse = self.input_adresse.text()
         
-        selected_items = self.table.selectedItems()
+        #param2 = "insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse)
         # connexion à la base de données
-        #RqtResult = self.connexion(self,"insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse,))
+        #con = sqlite3.connect('CamShoot.db')
+        #cur = con.cursor()
+        #cur.execute(requette)
+        #cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse))
+        #con.commit()
+        #RqtRes = cur.fetchall()
+        #con.close()
+        concat = "insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values("+identifiant +","+ photo +","+ nom +","+ prenom  +","+ mail +","+ telephone +","+ adresse+")"
+        str(concat)
+        print(concat)
+        RqtResult = self.connexion(self,concat)
         
         self.input_id_pers.setText("")
         self.input_nom.setText("")
