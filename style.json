@@ -61,7 +61,7 @@
 				"height": "parent"
 			}],
 			"expandedSize": [{
-				"width": 200,
+				"width": 220,
 				"height": "parent"
 			}],					
 			"menuTransitionAnimation": [{
@@ -146,9 +146,9 @@
 				{
 					"navigationButtons":[
 						{
-							"parametreBtn": "page",
-							"informationBtn": "page_2",
-							"aideBtn": "page_3"
+							"parametreBtn": "page_reglages",
+							"informationBtn": "page_information",
+							"aideBtn": "page_aide"
 						}
 					]
 				}

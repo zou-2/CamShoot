@@ -11,8 +11,6 @@ import cv2
 from logic.face_detector import face_detector
 from services.model_singleton import ModelSingleton
 
-
-
 ModelSingleton.get_instance("./facenet_keras_weights.h5")
 # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))

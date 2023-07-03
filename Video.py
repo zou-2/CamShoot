@@ -39,7 +39,7 @@ class VideoPlayer(QMainWindow):
             height, width, channels = frame.shape
             bytes_per_line = channels * width
             q_image = QImage(frame.data, width, height, bytes_per_line, QImage.Format_BGR888)
-
+            
             # Convertir QImage en QPixmap
             pixmap = QPixmap.fromImage(q_image)
 

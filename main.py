@@ -2,6 +2,7 @@
 import os
 import sys
 from ui_Principal import *
+import threading
 
 # import os
 # import sys
@@ -17,7 +18,7 @@ from ui_Principal import *
 
 # IMPORT Custom widgets
 from Custom_Widgets.Widgets import *
-
+ModelSingleton.get_instance("./facenet_keras_weights.h5")
 # INITIALIZE APP SETTINGS
 settings = QSettings()
 
@@ -53,16 +54,29 @@ class MainWindow(QMainWindow):
        
        # CLOSE RIGHT MENU WIDGET SIZE
         self.ui.closeNotificationBtn.clicked.connect(lambda: self.ui.popupNotificationContainer.collapseMenu())
+        
 
 
 ########################################################################
 ## EXECUTE L'APP
 ########################################################################
 if __name__ == "__main__":
+    #ui = Ui_MainWindow()
+    #def demarrer_interface():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
+    #thread_1 = threading.Thread(target= demarrer_interface)
+    #thread_2 = threading.Thread(target= ui.getFace())
+    
+    
+    #thread_1.start()
+    #thread_2.start()
+    
+    #thread_1.join()
+    #thread_2.join()
+ 
 ########################################################################
 ## END===>
-########################################################################  
+########################################################################

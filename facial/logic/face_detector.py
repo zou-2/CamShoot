@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-from services.model_singleton import ModelSingleton
+from facial.services.model_singleton import ModelSingleton
 
 
 def face_detector(face):

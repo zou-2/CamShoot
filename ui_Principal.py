@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'PrincipaloenFVF.ui'
+## Form generated from reading UI file 'PrincipalAzCLYT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-
-# Importez le module model_singleton du dossier services
-# from facial.logic.face_detector import face_detector
-
-# from facial.services import model_singleton
-# sys.path.append('/SUBLIME/facial')
 
 import sys
 from PIL import Image
@@ -28,13 +22,15 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
+from facial.logic import face_detector
+from facial.services.model_singleton import ModelSingleton
 # from facial.services.model_singleton import ModelSingleton
 # from facial.logic.face_detector import face_detector
 # from services.model_singleton import ModelSingleton
 
 
 import resources_rc
-
+#import photo_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -158,15 +154,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.gestionBtn)
 
-        self.imprimerBtn = QPushButton(self.frame_2)
-        self.imprimerBtn.setObjectName(u"imprimerBtn")
-        self.imprimerBtn.setFont(font)
+        self.videoBtn = QPushButton(self.frame_2)
+        self.videoBtn.setObjectName(u"videoBtn")
+        self.videoBtn.setFont(font)
         icon3 = QIcon()
-        icon3.addFile(u":/icons/printer.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.imprimerBtn.setIcon(icon3)
-        self.imprimerBtn.setIconSize(QSize(24, 24))
+        icon3.addFile(u":/icons/video.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.videoBtn.setIcon(icon3)
+        self.videoBtn.setIconSize(QSize(24, 24))
 
-        self.verticalLayout_3.addWidget(self.imprimerBtn)
+        self.verticalLayout_3.addWidget(self.videoBtn)
 
 
         self.verticalLayout_2.addWidget(self.frame_2, 0, Qt.AlignTop)
@@ -264,12 +260,11 @@ class Ui_MainWindow(object):
         self.centerMenuPages = QCustomStackedWidget(self.centerMenuSubContainer)
         self.centerMenuPages.setObjectName(u"centerMenuPages")
         self.centerMenuPages.setStyleSheet(u"")
-        self.page = QWidget()
-        self.page.setObjectName(u"page")
-        self.verticalLayout_7 = QVBoxLayout(self.page)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.label_2 = QLabel(self.page)
+        self.page_reglages = QWidget()
+        self.page_reglages.setObjectName(u"page_reglages")
+        self.label_2 = QLabel(self.page_reglages)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(82, 9, 40, 40))
         self.label_2.setMinimumSize(QSize(40, 40))
         self.label_2.setMaximumSize(QSize(40, 40))
         font2 = QFont()
@@ -278,65 +273,101 @@ class Ui_MainWindow(object):
         self.label_2.setPixmap(QPixmap(u":/icons/edit.svg"))
         self.label_2.setScaledContents(True)
         self.label_2.setAlignment(Qt.AlignCenter)
-
-        self.verticalLayout_7.addWidget(self.label_2, 0, Qt.AlignHCenter|Qt.AlignTop)
-
-        self.frame_11 = QFrame(self.page)
+        self.frame_11 = QFrame(self.page_reglages)
         self.frame_11.setObjectName(u"frame_11")
+        self.frame_11.setGeometry(QRect(10, 150, 181, 241))
         self.frame_11.setMinimumSize(QSize(0, 150))
         self.frame_11.setFrameShape(QFrame.StyledPanel)
         self.frame_11.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_17 = QVBoxLayout(self.frame_11)
-        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
-        self.lineEdit = QLineEdit(self.frame_11)
-        self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setEnabled(True)
+        self.currentMdp = QLineEdit(self.frame_11)
+        self.currentMdp.setObjectName(u"currentMdp")
+        self.currentMdp.setEnabled(True)
+        self.currentMdp.setGeometry(QRect(30, 60, 131, 26))
         sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy1)
-
-        self.verticalLayout_17.addWidget(self.lineEdit)
-
-        self.lineEdit_2 = QLineEdit(self.frame_11)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
-
-        self.verticalLayout_17.addWidget(self.lineEdit_2)
-
-
-        self.verticalLayout_7.addWidget(self.frame_11, 0, Qt.AlignTop)
-
-        self.pushButton = QPushButton(self.page)
-        self.pushButton.setObjectName(u"pushButton")
-
-        self.verticalLayout_7.addWidget(self.pushButton)
-
-        self.centerMenuPages.addWidget(self.page)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.verticalLayout_8 = QVBoxLayout(self.page_2)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.label_3 = QLabel(self.page_2)
+        sizePolicy1.setHeightForWidth(self.currentMdp.sizePolicy().hasHeightForWidth())
+        self.currentMdp.setSizePolicy(sizePolicy1)
+        self.currentMdp.setEchoMode(QLineEdit.Password)
+        self.currentMdp.setClearButtonEnabled(False)
+        self.newMdp = QLineEdit(self.frame_11)
+        self.newMdp.setObjectName(u"newMdp")
+        self.newMdp.setGeometry(QRect(30, 110, 131, 26))
+        self.newMdp.setEchoMode(QLineEdit.Password)
+        self.editUserName = QLineEdit(self.frame_11)
+        self.editUserName.setObjectName(u"editUserName")
+        self.editUserName.setEnabled(True)
+        self.editUserName.setGeometry(QRect(30, 10, 131, 26))
+        sizePolicy1.setHeightForWidth(self.editUserName.sizePolicy().hasHeightForWidth())
+        self.editUserName.setSizePolicy(sizePolicy1)
+        self.editUserName.setAlignment(Qt.AlignCenter)
+        self.confirmNewMdp = QLineEdit(self.frame_11)
+        self.confirmNewMdp.setObjectName(u"confirmNewMdp")
+        self.confirmNewMdp.setGeometry(QRect(30, 160, 131, 26))
+        self.confirmNewMdp.setEchoMode(QLineEdit.Password)
+        self.validerBtn = QPushButton(self.page_reglages)
+        self.validerBtn.setObjectName(u"validerBtn")
+        self.validerBtn.setGeometry(QRect(40, 360, 131, 31))
+        self.validerBtn.setMaximumSize(QSize(16777215, 16777215))
+        self.validerBtn.setStyleSheet(u"border-radius: 5px;\n"
+"background: #00ff00;\n"
+"color: white;")
+        self.centerMenuPages.addWidget(self.page_reglages)
+        self.page_information = QWidget()
+        self.page_information.setObjectName(u"page_information")
+        self.label_3 = QLabel(self.page_information)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setGeometry(QRect(10, 300, 136, 21))
         self.label_3.setFont(font2)
         self.label_3.setAlignment(Qt.AlignCenter)
-
-        self.verticalLayout_8.addWidget(self.label_3)
-
-        self.centerMenuPages.addWidget(self.page_2)
-        self.page_3 = QWidget()
-        self.page_3.setObjectName(u"page_3")
-        self.verticalLayout_9 = QVBoxLayout(self.page_3)
+        self.label_15 = QLabel(self.page_information)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setGeometry(QRect(10, 340, 131, 21))
+        self.label_15.setFont(font2)
+        self.label_15.setAlignment(Qt.AlignCenter)
+        self.label_16 = QLabel(self.page_information)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setGeometry(QRect(10, 380, 201, 21))
+        self.label_16.setFont(font2)
+        self.label_16.setAlignment(Qt.AlignCenter)
+        self.label_17 = QLabel(self.page_information)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setGeometry(QRect(70, 400, 136, 21))
+        self.label_17.setFont(font2)
+        self.label_17.setAlignment(Qt.AlignCenter)
+        self.label_18 = QLabel(self.page_information)
+        self.label_18.setObjectName(u"label_18")
+        self.label_18.setGeometry(QRect(0, 440, 171, 21))
+        self.label_18.setFont(font2)
+        self.label_18.setAlignment(Qt.AlignCenter)
+        self.label_19 = QLabel(self.page_information)
+        self.label_19.setObjectName(u"label_19")
+        self.label_19.setGeometry(QRect(10, 480, 181, 21))
+        self.label_19.setFont(font2)
+        self.label_19.setAlignment(Qt.AlignCenter)
+        self.label_20 = QLabel(self.page_information)
+        self.label_20.setObjectName(u"label_20")
+        self.label_20.setGeometry(QRect(80, 500, 111, 21))
+        self.label_20.setFont(font2)
+        self.label_20.setAlignment(Qt.AlignCenter)
+        self.label_21 = QLabel(self.page_information)
+        self.label_21.setObjectName(u"label_21")
+        self.label_21.setGeometry(QRect(20, 140, 136, 21))
+        self.label_21.setFont(font2)
+        self.label_21.setAlignment(Qt.AlignCenter)
+        self.centerMenuPages.addWidget(self.page_information)
+        self.page_aide = QWidget()
+        self.page_aide.setObjectName(u"page_aide")
+        self.verticalLayout_9 = QVBoxLayout(self.page_aide)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.label_4 = QLabel(self.page_3)
+        self.label_4 = QLabel(self.page_aide)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setFont(font2)
         self.label_4.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_9.addWidget(self.label_4)
 
-        self.centerMenuPages.addWidget(self.page_3)
+        self.centerMenuPages.addWidget(self.page_aide)
 
         self.verticalLayout_6.addWidget(self.centerMenuPages)
 
@@ -499,12 +530,12 @@ class Ui_MainWindow(object):
         self.page_gestion.setObjectName(u"page_gestion")
         self.label_11 = QLabel(self.page_gestion)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setGeometry(QRect(9, 9, 172, 21))
+        self.label_11.setGeometry(QRect(30, 10, 172, 21))
         self.label_11.setFont(font2)
         self.label_11.setAlignment(Qt.AlignCenter)
         self.widget = QWidget(self.page_gestion)
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(450, 470, 701, 80))
+        self.widget.setGeometry(QRect(331, 451, 701, 80))
         self.widget.setStyleSheet(u"background-color:#2c313c;\n"
 "border-radius: 5px;")
         self.BtnSupp = QPushButton(self.widget)
@@ -544,7 +575,7 @@ class Ui_MainWindow(object):
         self.BtnActualiser.setIconSize(QSize(24, 24))
         self.barRecherche = QWidget(self.page_gestion)
         self.barRecherche.setObjectName(u"barRecherche")
-        self.barRecherche.setGeometry(QRect(450, 80, 701, 61))
+        self.barRecherche.setGeometry(QRect(331, 61, 701, 61))
         self.barRecherche.setStyleSheet(u"background-color:#2c313c;\n"
 "border-radius: 5px;")
         self.input_Recherche = QLineEdit(self.barRecherche)
@@ -603,59 +634,59 @@ class Ui_MainWindow(object):
         __qtablewidgetitem6.setForeground(brush);
         self.table.setHorizontalHeaderItem(6, __qtablewidgetitem6)
         self.table.setObjectName(u"table")
-        self.table.setGeometry(QRect(450, 150, 701, 301))
+        self.table.setGeometry(QRect(331, 131, 701, 301))
         self.table.setStyleSheet(u"background-color:#2c313c;\n"
 "border-radius: 5px;")
         self.panel_Rec = QWidget(self.page_gestion)
         self.panel_Rec.setObjectName(u"panel_Rec")
-        self.panel_Rec.setGeometry(QRect(70, 80, 351, 471))
+        self.panel_Rec.setGeometry(QRect(21, 61, 301, 471))
         self.panel_Rec.setStyleSheet(u"background-color:#2c313c;\n"
 "border-radius: 5px;")
         self.input_id_pers = QLineEdit(self.panel_Rec)
         self.input_id_pers.setObjectName(u"input_id_pers")
-        self.input_id_pers.setGeometry(QRect(60, 20, 241, 31))
+        self.input_id_pers.setGeometry(QRect(30, 20, 241, 31))
         self.input_id_pers.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_nom = QLineEdit(self.panel_Rec)
         self.input_nom.setObjectName(u"input_nom")
-        self.input_nom.setGeometry(QRect(60, 70, 241, 31))
+        self.input_nom.setGeometry(QRect(30, 70, 241, 31))
         self.input_nom.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_prenom = QLineEdit(self.panel_Rec)
         self.input_prenom.setObjectName(u"input_prenom")
-        self.input_prenom.setGeometry(QRect(60, 120, 241, 31))
+        self.input_prenom.setGeometry(QRect(30, 120, 241, 31))
         self.input_prenom.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_photo = QLineEdit(self.panel_Rec)
         self.input_photo.setObjectName(u"input_photo")
-        self.input_photo.setGeometry(QRect(60, 170, 131, 31))
+        self.input_photo.setGeometry(QRect(30, 170, 131, 31))
         self.input_photo.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_telephone = QLineEdit(self.panel_Rec)
         self.input_telephone.setObjectName(u"input_telephone")
-        self.input_telephone.setGeometry(QRect(60, 220, 241, 31))
+        self.input_telephone.setGeometry(QRect(30, 220, 241, 31))
         self.input_telephone.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_mail = QLineEdit(self.panel_Rec)
         self.input_mail.setObjectName(u"input_mail")
-        self.input_mail.setGeometry(QRect(60, 270, 241, 31))
+        self.input_mail.setGeometry(QRect(30, 270, 241, 31))
         self.input_mail.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.input_adresse = QLineEdit(self.panel_Rec)
         self.input_adresse.setObjectName(u"input_adresse")
-        self.input_adresse.setGeometry(QRect(60, 320, 241, 31))
+        self.input_adresse.setGeometry(QRect(30, 320, 241, 31))
         self.input_adresse.setStyleSheet(u"background:#1b1b27;\n"
 " padding: 5px 10px;\n"
 " border-radius: 5px;")
         self.BtnAjouter = QPushButton(self.panel_Rec)
         self.BtnAjouter.setObjectName(u"BtnAjouter")
-        self.BtnAjouter.setGeometry(QRect(70, 390, 201, 41))
+        self.BtnAjouter.setGeometry(QRect(40, 390, 201, 41))
         self.BtnAjouter.setFont(font4)
         self.BtnAjouter.setStyleSheet(u"border-radius: 5px;\n"
 "background: #00ff00;\n"
@@ -666,7 +697,7 @@ class Ui_MainWindow(object):
         self.BtnAjouter.setIconSize(QSize(24, 24))
         self.BtnCharger = QPushButton(self.panel_Rec)
         self.BtnCharger.setObjectName(u"BtnCharger")
-        self.BtnCharger.setGeometry(QRect(200, 170, 101, 31))
+        self.BtnCharger.setGeometry(QRect(170, 170, 101, 31))
         self.BtnCharger.setStyleSheet(u"background: gray;\n"
 "color: white;\n"
 "")
@@ -852,95 +883,109 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
-############################################### BTN CLICKED ###################################################
+    # setupUi
+    ############################################### BTN CLICKED ###################################################
 ###############################################################################################################
 ###############################################################################################################
 
         self.BtnCharger.clicked.connect(self.loadImage)
         self.BtnAjouter.clicked.connect(self.insert)
         self.BtnModif.clicked.connect(self.edit)
+        self.validerBtn.clicked.connect(self.editAccount)
         self.BtnSupp.clicked.connect(self.delete)
         self.table.cellClicked.connect(self.handle_cell_clicked)
         self.BtnRecherche.clicked.connect(self.search)
         self.ligne = self.table.cellClicked.connect(self.on_cell_clicked)
         self.BtnActualiser.clicked.connect(self.reflesh)
+        self.videoBtn.clicked.connect(self.getFace)
         
         self.showTableData()
-        # self.getFace()
     # setupUi
     
     ###################################################################################################################
     ############################################### FACE RECOGNITION ########################################################
     
-#     def getFace(self):
-#         ModelSingleton.get_instance("./facenet_keras_weights.h5")
-#         # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-#         HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
-#         #MyFaceNet = load_model("facenet_keras.h5")
+    def getFace(self):
+        # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+        HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
+        #MyFaceNet = load_model("facenet_keras.h5")
 
 
-#         myfile = open("data.pkl", "rb")
-#         database = pickle.load(myfile)
-#         myfile.close()
+        myfile = open("data.pkl", "rb")
+        database = pickle.load(myfile)
+        myfile.close()
 
-#         cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(0)
 
-#         while (1):
-#             _, gbr1 = cap.read()
+        while (1):
+            _, gbr1 = cap.read()
 
-#             wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
+            wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
 
-#             if len(wajah) > 0:
-#                 x1, y1, width, height = wajah[0]
-#             else:
-#                 x1, y1, width, height = 1, 1, 10, 10
+            if len(wajah) > 0:
+                x1, y1, width, height = wajah[0]
+            else:
+                x1, y1, width, height = 1, 1, 10, 10
+                continue
 
-#             x1, y1 = abs(x1), abs(y1)
-#             x2, y2 = x1 + width, y1 + height
+            x1, y1 = abs(x1), abs(y1)
+            x2, y2 = x1 + width, y1 + height
 
-#             gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
-#             gbr = Image.fromarray(gbr)  # conversion OpenCV ho PIL
-#             gbr_array = asarray(gbr)
+            gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
+            gbr = Image.fromarray(gbr)  # conversion OpenCV ho PIL
+            gbr_array = asarray(gbr)
 
-#             face = gbr_array[y1:y2, x1:x2]
+            face = gbr_array[y1:y2, x1:x2]
 
-#             face = Image.fromarray(face)
-#             face = face.resize((160, 160))
-#             face = asarray(face)
+            face = Image.fromarray(face)
+            face = face.resize((160, 160))
+            face = asarray(face)
 
-#             face = face.astype('float32')
-#             mean, std = face.mean(), face.std()
-#             face = (face - mean) / std
+            face = face.astype('float32')
+            mean, std = face.mean(), face.std()
+            face = (face - mean) / std
 
-#             #face = expand_dims(face, axis=0)
-#             #signature = MyFaceNet.predict(face)
+            #face = expand_dims(face, axis=0)
+            #signature = MyFaceNet.predict(face)
 
-#             signature = face_detector(face)
+            signature = face_detector.face_detector(face)
 
-#             min_dist = 100
-#             identity = ' '
+            min_dist = 100
+            identity = ' '
 
-#             for key, value in database.items():
-#                 dist = np.linalg.norm(value - signature)
-#                 if dist < min_dist:
-#                     min_dist = dist
-#                     color = (0, 255, 0)
-#                     # identity = f"{key} {min_dist}"
-#                     identity = f"{key} : {min_dist}"
-#                 else:
-#                     color = (0 , 0 , 255)
+            for key, value in database.items():
+                dist = np.linalg.norm(value - signature)
+                if dist < min_dist:
+                    min_dist = dist
+                    color = (255, 0, 0)
+                    # identity = f"{key} {min_dist}"
+                    identity = f"{key}"
+                    shoot_face_unknow = gbr1[y1:y2, x1:x2]
+                    img_item = "sary_test.png"
+                    cv2.imwrite(img_item, shoot_face_unknow)
+                else:
+                    color = (0, 255, 0)
+    
+            cv2.putText(gbr1, identity, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (color), 2, cv2.LINE_AA)
+            cv2.rectangle(gbr1, (x1, y1), (x2, y2), (color), 2)
+        #     height, width, channels = gbr1.shape
+        #     bytes_per_line = channels * width
+        #     q_image = QImage(gbr1.data, width, height, bytes_per_line, QImage.Format_BGR888)
 
-#             cv2.putText(gbr1, identity, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2, cv2.LINE_AA)
-#             cv2.rectangle(gbr1, (x1, y1), (x2, y2), (color), 2)
+        #     # Convertir QImage en QPixmap
+        #     pixmap = QPixmap.fromImage(q_image)
 
-#             cv2.imshow('res', gbr1)
+        #     # Mettre le QPixmap dans le QLabel
+        #     self.label_10.setPixmap(pixmap.scaled(self.label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
-#             k = cv2.waitKey(5) & 0xFF
-#             if k == 27:
-#                 break
+            cv2.imshow('res', gbr1)
 
-#         cv2.destroyAllWindows()
-#         cap.release()
+            k = cv2.waitKey(5) & 0xFF
+            if k == 27:
+                break
+
+        cv2.destroyAllWindows()
+        cap.release()
     
     ###################################################################################################################
     ############################################### SHOW TABLE ########################################################    
@@ -1043,6 +1088,43 @@ class Ui_MainWindow(object):
     ############################################################ EDIT ##########################################################
     ############################################################################################################################
     ############################################################################################################################
+    def editAccount(self):
+        userName = self.editUserName.text()
+        password = self.currentMdp.text()
+        newPassword = self.newMdp.text()
+        confirmNewPassword = self.confirmNewMdp.text()
+        
+        # connexion à la base de données
+        con = sqlite3.connect('CamShoot.db')
+        cur = con.cursor()
+        cur.execute("select * from Login")
+        
+        RqtResult = cur.fetchall()
+        
+        oldPassword = RqtResult[0][2]
+        
+        print(f" current:{password}, oldpass: {oldPassword}, newpass: {newPassword}, confirmpass: {confirmNewPassword}")
+        # print(RqtResult[0][2])
+        # print(newPassword)
+        
+        if userName == "":
+            userName = "Admin"
+        
+        if ((str(password) == str(oldPassword)) and (str(newPassword) == str(confirmNewPassword))):
+        
+            cur.execute("update Login set userName=?,password=?where Identifiant=?",
+            (userName, newPassword, 1))
+            self.editUserName.setText("")
+            self.currentMdp.setText("")
+            self.newMdp.setText("")
+            self.confirmNewMdp.setText("")
+            
+        con.commit()
+        con.close()
+        
+        self.showTableData()
+        
+        
     def edit(self):
         identifiant = self.input_id_pers.text()
         photo = self.input_photo.text()
@@ -1067,14 +1149,7 @@ class Ui_MainWindow(object):
         self.input_telephone.setText("")
         self.input_mail.setText("")
         self.input_adresse.setText("")
-        self.showTableData()   
-        
-    
-
-    ############################################################ DELETE ##########################################################
-    ############################################################################################################################
-    ############################################################################################################################
-        
+        self.showTableData()
     def delete(self):
         
         identifiant = self.input_id_pers.text()
@@ -1102,6 +1177,7 @@ class Ui_MainWindow(object):
         self.input_photo.setText(FileName[0])
         #fileName = QFileDialog.getOpenFileName( self ,( "Ouvrir Image" ) , "E:\Photo_nathan\Albert.jpg" , ( "Image Files (*.png *.jpg *.bmp)" ))
 
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
 #if QT_CONFIG(tooltip)
@@ -1117,9 +1193,9 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.gestionBtn.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels ", None))
 #if QT_CONFIG(tooltip)
-        self.imprimerBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Imprimer", None))
+        self.videoBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Imprimer", None))
 #endif // QT_CONFIG(tooltip)
-        self.imprimerBtn.setText(QCoreApplication.translate("MainWindow", u"Imprimer", None))
+        self.videoBtn.setText(QCoreApplication.translate("MainWindow", u"Imprimer", None))
 #if QT_CONFIG(tooltip)
         self.parametreBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Param\u00e8tre", None))
 #endif // QT_CONFIG(tooltip)
@@ -1138,10 +1214,19 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.closeCenterMenuBtn.setText("")
         self.label_2.setText("")
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Mot de passe courant", None))
-        self.lineEdit_2.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nouveau mot de passe", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Valider", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Informations", None))
+        self.currentMdp.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Mot de passe courant", None))
+        self.newMdp.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nouveau mot de passe", None))
+        self.editUserName.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Admin", None))
+        self.confirmNewMdp.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Confirmer Nouveau mot de passe", None))
+        self.validerBtn.setText(QCoreApplication.translate("MainWindow", u"Valider", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Nom: RANJALAHY", None))
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"Prenom: T.herizo", None))
+        self.label_16.setText(QCoreApplication.translate("MainWindow", u"Adresse: PRES VS 52 HDQ", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"Avaratr'ankatso", None))
+        self.label_18.setText(QCoreApplication.translate("MainWindow", u"M\u00e9tier: D\u00e9veloppeur", None))
+        self.label_19.setText(QCoreApplication.translate("MainWindow", u"Contact: 261329045525", None))
+        self.label_20.setText(QCoreApplication.translate("MainWindow", u"261346257586", None))
+        self.label_21.setText("")
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Aide", None))
         self.label_5.setText("")
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"CamShoot", None))
