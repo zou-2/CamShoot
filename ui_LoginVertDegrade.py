@@ -11,6 +11,8 @@
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
 
 # import logo_rc
 
@@ -19,6 +21,8 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(630, 465)
+        Form.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        Form.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.widget = QWidget(Form)
         self.widget.setObjectName(u"widget")
         self.widget.setGeometry(QRect(20, 20, 590, 420))
@@ -95,6 +99,10 @@ class Ui_Form(object):
         font2.setWeight(75)
         self.seConnecter.setFont(font2)
 
+        self.label.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=25, xOffset=0, yOffset=0))
+        self.label_2.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=25, xOffset=0, yOffset=0))
+        self.seConnecter.setGraphicsEffect(QtWidgets.QGraphicsDropShadowEffect(blurRadius=25, xOffset=3, yOffset=3))
+
         self.retranslateUi(Form)
         
         self.seConnecter.clicked.connect(self.Connexion)
@@ -104,8 +112,7 @@ class Ui_Form(object):
     ###########################################################################################
     ###########################################################################################
     ###########################################################################################
-    def Connexion(self):
-            #eto code connexion
+    
             
             
     ###########################################################################################
@@ -123,3 +130,10 @@ class Ui_Form(object):
         self.seConnecter.setText(QCoreApplication.translate("Form", u"Se connecter", None))
     # retranslateUi
 
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
