@@ -4,7 +4,7 @@ import sys
 from ui_Principal import *
 import threading
 
-# import os
+import os
 # import sys
 
 # # Obtenez le chemin absolu du dossier parent du fichier en cours d'exécution
@@ -14,7 +14,9 @@ import threading
 # chemin_facial = os.path.join(chemin_parent, "facial")
 # sys.path.append(chemin_facial)
 
-# import facial.Get_BD
+# from facial import Get_BD
+
+
 
 # IMPORT Custom widgets
 from Custom_Widgets.Widgets import *

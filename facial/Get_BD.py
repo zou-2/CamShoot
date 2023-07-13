@@ -7,7 +7,7 @@ chemin_parent = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Ajoutez le chemin absolu du dossier parent au chemin de recherche des modules
 chemin_facial = os.path.join(chemin_parent, "facial")
 sys.path.append(chemin_facial)
-print(chemin_facial)
+print("chemin ="+chemin_facial)
 # Importez le fichier du dossier logic
 from logic.face_detector import face_detector
 
@@ -84,7 +84,7 @@ for row in RqtResult:
     signature = face_detector(face)
     #signature = MyFaceNet.embeddings(face)
     #database[filename]= signature
-    
+    # print('1 = '+row[1] +', 2 = ' + row[3])
     database[row[3]] = signature
 
 #print(database)

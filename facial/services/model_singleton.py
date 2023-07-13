@@ -7,6 +7,8 @@ from facial.utils.model_loader import ModelLoader
 
 
 
+
+
 class ModelSingleton:
     instance = None
 

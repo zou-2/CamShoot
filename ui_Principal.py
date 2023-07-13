@@ -28,6 +28,7 @@ from facial.services.model_singleton import ModelSingleton
 # from facial.logic.face_detector import face_detector
 # from services.model_singleton import ModelSingleton
 
+import time
 
 import resources_rc
 #import photo_rc
@@ -907,7 +908,7 @@ class Ui_MainWindow(object):
     
     def getFace(self):
         # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-        HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'))
+        HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_alt.xml'))
         #MyFaceNet = load_model("facenet_keras.h5")
 
 
@@ -917,7 +918,11 @@ class Ui_MainWindow(object):
 
         cap = cv2.VideoCapture(0)
 
-        while (1):
+        detected_identities = []
+        # À l'extérieur de la boucle principale, initialisez un compteur pour créer des noms de fichiers uniques
+        unknown_counter = 1
+
+        while True:
             _, gbr1 = cap.read()
 
             wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
@@ -925,14 +930,13 @@ class Ui_MainWindow(object):
             if len(wajah) > 0:
                 x1, y1, width, height = wajah[0]
             else:
-                x1, y1, width, height = 1, 1, 10, 10
                 continue
 
             x1, y1 = abs(x1), abs(y1)
             x2, y2 = x1 + width, y1 + height
 
             gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
-            gbr = Image.fromarray(gbr)  # conversion OpenCV ho PIL
+            gbr = Image.fromarray(gbr)
             gbr_array = asarray(gbr)
 
             face = gbr_array[y1:y2, x1:x2]
@@ -945,9 +949,6 @@ class Ui_MainWindow(object):
             mean, std = face.mean(), face.std()
             face = (face - mean) / std
 
-            #face = expand_dims(face, axis=0)
-            #signature = MyFaceNet.predict(face)
-
             signature = face_detector.face_detector(face)
 
             min_dist = 100
@@ -957,28 +958,34 @@ class Ui_MainWindow(object):
                 dist = np.linalg.norm(value - signature)
                 if dist < min_dist:
                     min_dist = dist
-                    color = (255, 0, 0)
-                    # identity = f"{key} {min_dist}"
-                    identity = f"{key}"
-                    shoot_face_unknow = gbr1[y1:y2, x1:x2]
-                    img_item = "sary_test.png"
-                    cv2.imwrite(img_item, shoot_face_unknow)
-                else:
                     color = (0, 255, 0)
-    
+                    identity = f"{key}"
+                    print(identity)
+
+                    if identity not in detected_identities:
+                        detected_identities.append(identity)
+
+                    if identity != "non_reconnu":
+                        color = (0, 255, 0)
+                    else:
+                        color = (0, 0, 255)
+
             cv2.putText(gbr1, identity, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (color), 2, cv2.LINE_AA)
             cv2.rectangle(gbr1, (x1, y1), (x2, y2), (color), 2)
-        #     height, width, channels = gbr1.shape
-        #     bytes_per_line = channels * width
-        #     q_image = QImage(gbr1.data, width, height, bytes_per_line, QImage.Format_BGR888)
-
-        #     # Convertir QImage en QPixmap
-        #     pixmap = QPixmap.fromImage(q_image)
-
-        #     # Mettre le QPixmap dans le QLabel
-        #     self.label_10.setPixmap(pixmap.scaled(self.label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
             cv2.imshow('res', gbr1)
+
+            # Vérifier si la liste detected_identities contient uniquement l'identité "non_reconnu" et prendre une photo
+            if len(detected_identities) == 1 and detected_identities[0] == "non_reconnu":
+                shoot_face_unknown = gbr1[y1:y2, x1:x2]
+                img_item = f"unknown_{time.time()}_face_{unknown_counter}.png"
+                # img_item = "sary_test.png"
+                cv2.imwrite(img_item, shoot_face_unknown)
+
+                # Incrémenter le compteur pour le prochain fichier
+                unknown_counter += 1
+            
+            detected_identities = []
 
             k = cv2.waitKey(5) & 0xFF
             if k == 27:
