@@ -122,7 +122,20 @@
 			],
 			"toggleButton": [{
 				"buttonName": "notificationBtn"
-			}]
+			},
+			{
+				"buttonName": "validerBtn"
+			},
+			{
+				"buttonName": "BtnModif"
+			},
+			{
+				"buttonName": "BtnSupp"
+			},
+			{
+				"buttonName": "BtnAjouter"
+			}
+		]
 		}
 	],
 	"QStackedWidget":[

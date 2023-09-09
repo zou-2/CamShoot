@@ -8,6 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+import datetime
 import sys
 from PIL import Image
 from keras.models import load_model
@@ -906,6 +907,19 @@ class Ui_MainWindow(object):
     ###################################################################################################################
     ############################################### FACE RECOGNITION ########################################################
     
+    def record(self,identity,D_H):
+        # connexion à la base de données
+        con = sqlite3.connect('CamShoot.db')
+        cur = con.cursor()
+        identity = str(identity)
+        cur.execute("select id_Pers from Personnes where prenom = (?)", (identity,))
+        con.commit()
+        RqtResult = cur.fetchall()
+        cur.execute("insert into Passages (dateHeure,ID_Pers)values (?,?)", (D_H, RqtResult[0][0]),)
+        con.commit()   
+        #RqtResult = cur.fetchall()
+        con.close()
+                
     def getFace(self):
         # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_alt.xml'))
@@ -922,6 +936,7 @@ class Ui_MainWindow(object):
         # À l'extérieur de la boucle principale, initialisez un compteur pour créer des noms de fichiers uniques
         unknown_counter = 1
 
+    
         while True:
             _, gbr1 = cap.read()
 
@@ -953,6 +968,8 @@ class Ui_MainWindow(object):
 
             min_dist = 100
             identity = ' '
+            date_heure = datetime.datetime.now()
+            date_heure_texte = date_heure.strftime("%Y-%m-%d %H:%M:%S")
 
             for key, value in database.items():
                 dist = np.linalg.norm(value - signature)
@@ -960,7 +977,7 @@ class Ui_MainWindow(object):
                     min_dist = dist
                     color = (0, 255, 0)
                     identity = f"{key}"
-                    print(identity)
+                    
 
                     if identity not in detected_identities:
                         detected_identities.append(identity)
@@ -978,12 +995,24 @@ class Ui_MainWindow(object):
             # Vérifier si la liste detected_identities contient uniquement l'identité "non_reconnu" et prendre une photo
             if len(detected_identities) == 1 and detected_identities[0] == "non_reconnu":
                 shoot_face_unknown = gbr1[y1:y2, x1:x2]
-                img_item = f"unknown_{time.time()}_face_{unknown_counter}.png"
+                chemin_dossier = "Photo/"
+                img_item = f"{chemin_dossier}unknown_unknown_{time.time()}_face_{unknown_counter}.png"
                 # img_item = "sary_test.png"
                 cv2.imwrite(img_item, shoot_face_unknown)
 
                 # Incrémenter le compteur pour le prochain fichier
                 unknown_counter += 1
+                
+                self.record(identity,date_heure_texte)
+                # Pour activer le bouton
+                self.label_12.setText("Une personne vient de passer")
+                self.notificationBtn.setEnabled(True)
+                
+            else:
+                    
+                self.record(identity,date_heure_texte)
+                self.label_12.setText("Une personne vient de passer")
+                self.notificationBtn.setEnabled(True)
             
             detected_identities = []
 
@@ -1083,6 +1112,7 @@ class Ui_MainWindow(object):
         con.commit()   
         #RqtResult = cur.fetchall()
         con.close()
+        self.label_12.setText("Ajout d'une personne")
         self.input_id_pers.setText("")
         self.input_nom.setText("")
         self.input_prenom.setText("")
@@ -1121,6 +1151,7 @@ class Ui_MainWindow(object):
         
             cur.execute("update Login set userName=?,password=?where Identifiant=?",
             (userName, newPassword, 1))
+            self.label_12.setText("Compte mise à jours")
             self.editUserName.setText("")
             self.currentMdp.setText("")
             self.newMdp.setText("")
@@ -1149,6 +1180,7 @@ class Ui_MainWindow(object):
         con.commit()
         con.close()
         
+        self.label_12.setText("Modification d'une personne")
         self.input_id_pers.setText("")
         self.input_nom.setText("")
         self.input_prenom.setText("")
@@ -1166,7 +1198,8 @@ class Ui_MainWindow(object):
         cur.execute("delete from Personnes where id_Pers = ?",(identifiant,))
         con.commit()   
         con.close()
-            
+        
+        self.label_12.setText("Suppression d'une personne")    
         self.input_id_pers.setText("")
         self.input_nom.setText("")
         self.input_prenom.setText("")
@@ -1303,4 +1336,3 @@ class Ui_MainWindow(object):
         self.closeNotificationBtn.setText("")
         self.label_14.setText(QCoreApplication.translate("MainWindow", u"CopyRight 2022", None))
     # retranslateUi
-
