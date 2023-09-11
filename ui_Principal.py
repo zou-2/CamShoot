@@ -1037,6 +1037,9 @@ class Ui_MainWindow(object):
         self.table.clearContents()
         self.table.setRowCount(0)
         
+        # Définissez la hauteur de ligne fixe (par exemple, 100 pixels)
+        row_height = 100
+        
         for row_number, row_data in enumerate(RqtResult):
             self.table.insertRow(row_number)
             for column_number, column_data in enumerate(row_data):
@@ -1054,7 +1057,12 @@ class Ui_MainWindow(object):
                     self.table.setCellWidget(row_number, column_number, widget)
                 else:
                     self.table.setItem(row_number, column_number, QTableWidgetItem(item))
+                    # Définissez la hauteur de la ligne
+                    self.table.setRowHeight(row_number, row_height)
         con.close()
+        # Ajustez automatiquement la hauteur des lignes pour afficher les images en entier
+        # for row_number in range(self.table.rowCount()):
+        #     self.table.resizeRowToContents(row_number)
     
     #######################################################################################################
     ############################################### SEARCH ################################################
