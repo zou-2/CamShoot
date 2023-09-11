@@ -30,6 +30,7 @@ from facial.services.model_singleton import ModelSingleton
 # from services.model_singleton import ModelSingleton
 
 import time
+from PySide2 import QtGui, QtWidgets, QtCore
 
 import resources_rc
 #import photo_rc
@@ -1026,20 +1027,33 @@ class Ui_MainWindow(object):
     ###################################################################################################################
     ############################################### SHOW TABLE ########################################################    
     def showTableData(self):
-        # connexion à la base de données
+        # Connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
         cur.execute("select * from Personnes")
         con.commit()
         RqtResult = cur.fetchall()
+        
         self.table.clearContents()
         self.table.setRowCount(0)
+        
         for row_number, row_data in enumerate(RqtResult):
             self.table.insertRow(row_number)
             for column_number, column_data in enumerate(row_data):
                 item = str(column_data)
-                #if(column_number != 0):
-                self.table.setItem(row_number, column_number, QTableWidgetItem(item))
+                if column_number == 1:  # Colonne contenant les données binaires de l'image
+                    pixmap = QtGui.QPixmap()
+                    pixmap.loadFromData(column_data)
+                    label = QtWidgets.QLabel()
+                    label.setPixmap(pixmap)
+                    # Encapsulez le QLabel dans un QWidget
+                    widget = QtWidgets.QWidget()
+                    layout = QtWidgets.QHBoxLayout()
+                    layout.addWidget(label)
+                    widget.setLayout(layout)
+                    self.table.setCellWidget(row_number, column_number, widget)
+                else:
+                    self.table.setItem(row_number, column_number, QTableWidgetItem(item))
         con.close()
     
     #######################################################################################################
@@ -1302,7 +1316,7 @@ class Ui_MainWindow(object):
         self.closeBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close Window", None))
 #endif // QT_CONFIG(tooltip)
         self.closeBtn.setText("")
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Bienvenu \U0001F601", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Bienvenu \U0001F31D", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels", None))
         self.BtnSupp.setText(QCoreApplication.translate("MainWindow", u"Supprimer", None))
         self.BtnModif.setText(QCoreApplication.translate("MainWindow", u"Modifier", None))
