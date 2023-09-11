@@ -14,6 +14,8 @@ import sys
 from main import MainWindow
 from ui_Principal import *
 import threading
+import main
+    
 
 #import de login
 import sqlite3
@@ -141,22 +143,7 @@ class Ui_Form(object):
             self.inputUser.setText("")
             self.inputPswrd.setText("")
             
-            if __name__ == "__main__":
-                #ui = Ui_MainWindow()
-                #def demarrer_interface():
-                app = QApplication(sys.argv)
-                window = MainWindow()
-                window.show()
-                sys.exit(app.exec_())
-                #thread_1 = threading.Thread(target= demarrer_interface)
-                #thread_2 = threading.Thread(target= ui.getFace())
-                
-                
-                #thread_1.start()
-                #thread_2.start()
-                
-                #thread_1.join()
-                #thread_2.join()
+            self.open_main_window()    
             
             ########################################################################
             ## END===>
@@ -164,7 +151,15 @@ class Ui_Form(object):
             con.close()
             ###################################################################################################
             ###################################################################################################
-
+    def open_main_window(self):
+         # Créez une instance de la fenêtre principale (MainWindow)
+        main_window = main.MainWindow()  
+    
+        # Affichez la fenêtre principale
+        main_window.show()
+    
+        # Fermez la fenêtre de connexion actuelle
+        Form.close()  
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))

@@ -1099,16 +1099,20 @@ class Ui_MainWindow(object):
         identifiant = self.input_id_pers.text()
         nom = self.input_nom.text()
         prenom = self.input_prenom.text()
-        photo = self.input_photo.text()
+        # photo = self.input_photo.text()
         telephone = self.input_telephone.text()
         mail = self.input_mail.text()
         adresse = self.input_adresse.text()
+        
+        # Ouverture du fichier image et conversion en données binaires
+        with open(self.input_photo.text(), 'rb') as image_file:
+                image_binary = image_file.read()
         
 
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
-        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, photo, nom, prenom, mail, telephone, adresse))
+        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, image_binary, nom, prenom, mail, telephone, adresse))
         con.commit()   
         #RqtResult = cur.fetchall()
         con.close()
@@ -1165,18 +1169,23 @@ class Ui_MainWindow(object):
         
     def edit(self):
         identifiant = self.input_id_pers.text()
-        photo = self.input_photo.text()
+        # photo = self.input_photo.text()
         nom = self.input_nom.text()
         prenom = self.input_prenom.text()
         telephone = self.input_telephone.text()
         mail = self.input_mail.text()
         adresse = self.input_adresse.text()
+        
+        # Ouverture du fichier image et conversion en données binaires
+        with open(self.input_photo.text(), 'rb') as image_file:
+                image_binary = image_file.read()
+        
         print(identifiant)
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
         cur.execute("update Personnes set id_Pers=?,photo=?,nom=?,prenom=?,mail=?,telephone=?,adresse=? where id_Pers=?",
-            (identifiant, photo, nom, prenom, mail, telephone, adresse,identifiant))
+            (identifiant, image_binary, nom, prenom, mail, telephone, adresse,identifiant))
         con.commit()
         con.close()
         
@@ -1215,6 +1224,8 @@ class Ui_MainWindow(object):
     def loadImage(self):   
         FileName = QFileDialog.getOpenFileName(None, 'open file','E:\Photo_nathan\Albert.jpg')
         self.input_photo.setText(FileName[0])
+        # global sary 
+        # sary = FileName[0]
         #fileName = QFileDialog.getOpenFileName( self ,( "Ouvrir Image" ) , "E:\Photo_nathan\Albert.jpg" , ( "Image Files (*.png *.jpg *.bmp)" ))
 
 
@@ -1291,7 +1302,7 @@ class Ui_MainWindow(object):
         self.closeBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close Window", None))
 #endif // QT_CONFIG(tooltip)
         self.closeBtn.setText("")
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Accueil", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Bienvenu \U0001F601", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels", None))
         self.BtnSupp.setText(QCoreApplication.translate("MainWindow", u"Supprimer", None))
         self.BtnModif.setText(QCoreApplication.translate("MainWindow", u"Modifier", None))
