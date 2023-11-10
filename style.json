@@ -146,6 +146,7 @@
 					"navigationButtons":[
 						{
 							"accueilBtn": "page_accueil",
+							"passageBtn": "pagePassages",
 							"gestionBtn": "page_gestion"
 						}
 					]
@@ -187,7 +188,10 @@
 		{
 			"Buttons": [
 				"accueilBtn",
-				"gestionBtn"
+				"gestionBtn",
+				"passageBtn",
+				"videoBtn",
+				"chargerBdBtn"
 			],
 				"Style":[
 					{

@@ -1,39 +1,22 @@
-import datetime
-import sys
-from PIL import Image
-from keras.models import load_model
-import numpy as np
-from numpy import asarray
-from numpy import expand_dims
-import pickle
-import cv2
-import sqlite3
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'PrincipalckGJZF.ui'
+##
+## Created by: Qt User Interface Compiler version 5.15.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
 from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+
 from Custom_Widgets.Widgets import QCustomSlideMenu
 from Custom_Widgets.Widgets import QCustomStackedWidget
-from facial.logic import face_detector
-from facial.services.model_singleton import ModelSingleton
-# from facial.services.model_singleton import ModelSingleton
-# from facial.logic.face_detector import face_detector
-# from services.model_singleton import ModelSingleton
-
-import time
-from PySide2 import QtGui, QtWidgets, QtCore
-from PyQt5.QtCore import QThread, pyqtSignal
-
 
 import resources_rc
-
-class Worker(QThread):
-    finished = pyqtSignal()
-    
-    def run(self):
-        import Get_BD
-        
-        self.finished.emit()
-
+import photo_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -157,54 +140,35 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.gestionBtn)
 
-        self.passageBtn = QPushButton(self.frame_2)
-        self.passageBtn.setObjectName(u"passageBtn")
-        self.passageBtn.setFont(font)
-        icon3 = QIcon()
-        icon3.addFile(u":/icons/database.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.passageBtn.setIcon(icon3)
-        self.passageBtn.setIconSize(QSize(24, 24))
-
-        self.verticalLayout_3.addWidget(self.passageBtn)
-
         self.videoBtn = QPushButton(self.frame_2)
         self.videoBtn.setObjectName(u"videoBtn")
         self.videoBtn.setFont(font)
-        icon4 = QIcon()
-        icon4.addFile(u":/icons/video.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.videoBtn.setIcon(icon4)
+        icon3 = QIcon()
+        icon3.addFile(u":/icons/video.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.videoBtn.setIcon(icon3)
         self.videoBtn.setIconSize(QSize(24, 24))
 
         self.verticalLayout_3.addWidget(self.videoBtn)
 
         self.chargerBdBtn = QPushButton(self.frame_2)
         self.chargerBdBtn.setObjectName(u"chargerBdBtn")
-        self.chargerBdBtn.setFont(font)
-        icon5 = QIcon()
-        icon5.addFile(u":/icons/refresh-cw.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.chargerBdBtn.setIcon(icon5)
+        icon4 = QIcon()
+        icon4.addFile(u":/icons/refresh-cw.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.chargerBdBtn.setIcon(icon4)
         self.chargerBdBtn.setIconSize(QSize(24, 24))
 
         self.verticalLayout_3.addWidget(self.chargerBdBtn)
-#####################################################################################################
-####################################GIF##############################################################
-#####################################################################################################
+
         self.labelGif = QLabel(self.frame_2)
         self.labelGif.setObjectName(u"labelGif")
-        self.labelGif.setMaximumSize(QSize(40, 40))
-        
-        self.labelGif.setAlignment(QtCore.Qt.AlignCenter)
-        
+        self.labelGif.setMaximumSize(QSize(24, 24))
+
         self.verticalLayout_3.addWidget(self.labelGif)
-        movie = QMovie('Pictures/loading2.gif')
-        self.labelGif.setMovie(movie)
-        movie.start() 
-        self.labelGif.setVisible(False)  # Défaut : caché
 
 
         self.verticalLayout_2.addWidget(self.frame_2, 0, Qt.AlignTop)
 
-        self.verticalSpacer = QSpacerItem(20, 30, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
@@ -219,9 +183,9 @@ class Ui_MainWindow(object):
         self.parametreBtn = QPushButton(self.frame_3)
         self.parametreBtn.setObjectName(u"parametreBtn")
         self.parametreBtn.setFont(font)
-        icon6 = QIcon()
-        icon6.addFile(u":/icons/settings.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.parametreBtn.setIcon(icon6)
+        icon5 = QIcon()
+        icon5.addFile(u":/icons/settings.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.parametreBtn.setIcon(icon5)
         self.parametreBtn.setIconSize(QSize(24, 24))
 
         self.verticalLayout_4.addWidget(self.parametreBtn)
@@ -229,18 +193,18 @@ class Ui_MainWindow(object):
         self.informationBtn = QPushButton(self.frame_3)
         self.informationBtn.setObjectName(u"informationBtn")
         self.informationBtn.setFont(font)
-        icon7 = QIcon()
-        icon7.addFile(u":/icons/info.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.informationBtn.setIcon(icon7)
+        icon6 = QIcon()
+        icon6.addFile(u":/icons/info.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.informationBtn.setIcon(icon6)
         self.informationBtn.setIconSize(QSize(24, 24))
 
         self.verticalLayout_4.addWidget(self.informationBtn)
 
         self.aideBtn = QPushButton(self.frame_3)
         self.aideBtn.setObjectName(u"aideBtn")
-        icon8 = QIcon()
-        icon8.addFile(u":/icons/help-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.aideBtn.setIcon(icon8)
+        icon7 = QIcon()
+        icon7.addFile(u":/icons/help-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.aideBtn.setIcon(icon7)
         self.aideBtn.setIconSize(QSize(24, 24))
 
         self.verticalLayout_4.addWidget(self.aideBtn)
@@ -284,9 +248,9 @@ class Ui_MainWindow(object):
 
         self.closeCenterMenuBtn = QPushButton(self.frame_4)
         self.closeCenterMenuBtn.setObjectName(u"closeCenterMenuBtn")
-        icon9 = QIcon()
-        icon9.addFile(u":/icons/x-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.closeCenterMenuBtn.setIcon(icon9)
+        icon8 = QIcon()
+        icon8.addFile(u":/icons/x-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.closeCenterMenuBtn.setIcon(icon8)
         self.closeCenterMenuBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_3.addWidget(self.closeCenterMenuBtn, 0, Qt.AlignRight)
@@ -467,27 +431,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.notificationBtn = QPushButton(self.frame_6)
         self.notificationBtn.setObjectName(u"notificationBtn")
-        icon10 = QIcon()
-        icon10.addFile(u":/icons/bell.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.notificationBtn.setIcon(icon10)
+        icon9 = QIcon()
+        icon9.addFile(u":/icons/bell.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.notificationBtn.setIcon(icon9)
         self.notificationBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_6.addWidget(self.notificationBtn)
 
         self.moreMenuBtn = QPushButton(self.frame_6)
         self.moreMenuBtn.setObjectName(u"moreMenuBtn")
-        icon11 = QIcon()
-        icon11.addFile(u":/icons/more-horizontal.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.moreMenuBtn.setIcon(icon11)
+        icon10 = QIcon()
+        icon10.addFile(u":/icons/more-horizontal.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.moreMenuBtn.setIcon(icon10)
         self.moreMenuBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_6.addWidget(self.moreMenuBtn)
 
         self.profileMenuBtn = QPushButton(self.frame_6)
         self.profileMenuBtn.setObjectName(u"profileMenuBtn")
-        icon12 = QIcon()
-        icon12.addFile(u":/icons/user.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.profileMenuBtn.setIcon(icon12)
+        icon11 = QIcon()
+        icon11.addFile(u":/icons/user.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.profileMenuBtn.setIcon(icon11)
         self.profileMenuBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_6.addWidget(self.profileMenuBtn)
@@ -504,27 +468,27 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.minimiseBtn = QPushButton(self.frame_7)
         self.minimiseBtn.setObjectName(u"minimiseBtn")
-        icon13 = QIcon()
-        icon13.addFile(u":/icons/minus.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.minimiseBtn.setIcon(icon13)
+        icon12 = QIcon()
+        icon12.addFile(u":/icons/minus.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.minimiseBtn.setIcon(icon12)
         self.minimiseBtn.setIconSize(QSize(16, 16))
 
         self.horizontalLayout_4.addWidget(self.minimiseBtn)
 
         self.restoreBtn = QPushButton(self.frame_7)
         self.restoreBtn.setObjectName(u"restoreBtn")
-        icon14 = QIcon()
-        icon14.addFile(u":/icons/square.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.restoreBtn.setIcon(icon14)
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/square.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.restoreBtn.setIcon(icon13)
         self.restoreBtn.setIconSize(QSize(16, 16))
 
         self.horizontalLayout_4.addWidget(self.restoreBtn)
 
         self.closeBtn = QPushButton(self.frame_7)
         self.closeBtn.setObjectName(u"closeBtn")
-        icon15 = QIcon()
-        icon15.addFile(u":/icons/x.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.closeBtn.setIcon(icon15)
+        icon14 = QIcon()
+        icon14.addFile(u":/icons/x.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.closeBtn.setIcon(icon14)
         self.closeBtn.setIconSize(QSize(16, 16))
 
         self.horizontalLayout_4.addWidget(self.closeBtn)
@@ -563,133 +527,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_16.addWidget(self.label_10)
 
         self.mainPages.addWidget(self.page_accueil)
-        self.pagePassages = QWidget()
-        self.pagePassages.setObjectName(u"pagePassages")
-        self.photoArea = QWidget(self.pagePassages)
-        self.photoArea.setObjectName(u"photoArea")
-        self.photoArea.setGeometry(QRect(620, 120, 451, 341))
-        self.photoArea.setStyleSheet(u"background-color:#2c313c;\n"
-"border-radius: 5px;")
-        self.labelPhotoAfficher = QLabel(self.photoArea)
-        self.labelPhotoAfficher.setObjectName(u"labelPhotoAfficher")
-        self.labelPhotoAfficher.setGeometry(QRect(30, 30, 161, 161))
-        self.labelPhotoAfficher.setStyleSheet(u"")
-        self.lblNomAffiche = QLabel(self.photoArea)
-        self.lblNomAffiche.setObjectName(u"lblNomAffiche")
-        self.lblNomAffiche.setGeometry(QRect(230, 70, 31, 31))
-        self.lblNomAffiche.setFont(font1)
-        self.lblNomAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblPrenomAffiche = QLabel(self.photoArea)
-        self.lblPrenomAffiche.setObjectName(u"lblPrenomAffiche")
-        self.lblPrenomAffiche.setGeometry(QRect(230, 120, 51, 31))
-        self.lblPrenomAffiche.setFont(font1)
-        self.lblPrenomAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblAdresseAffiche = QLabel(self.photoArea)
-        self.lblAdresseAffiche.setObjectName(u"lblAdresseAffiche")
-        self.lblAdresseAffiche.setGeometry(QRect(30, 210, 51, 31))
-        self.lblAdresseAffiche.setFont(font1)
-        self.lblAdresseAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblMailAffiche = QLabel(self.photoArea)
-        self.lblMailAffiche.setObjectName(u"lblMailAffiche")
-        self.lblMailAffiche.setGeometry(QRect(30, 240, 31, 31))
-        self.lblMailAffiche.setFont(font1)
-        self.lblMailAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblIdAffiche = QLabel(self.photoArea)
-        self.lblIdAffiche.setObjectName(u"lblIdAffiche")
-        self.lblIdAffiche.setGeometry(QRect(230, 30, 61, 31))
-        self.lblIdAffiche.setFont(font1)
-        self.lblIdAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblTelephoneAffiche = QLabel(self.photoArea)
-        self.lblTelephoneAffiche.setObjectName(u"lblTelephoneAffiche")
-        self.lblTelephoneAffiche.setGeometry(QRect(30, 270, 71, 31))
-        self.lblTelephoneAffiche.setFont(font1)
-        self.lblTelephoneAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
-        self.lblIdAffiche_2 = QLabel(self.photoArea)
-        self.lblIdAffiche_2.setObjectName(u"lblIdAffiche_2")
-        self.lblIdAffiche_2.setGeometry(QRect(300, 30, 141, 31))
-        self.lblIdAffiche_2.setFont(font1)
-        self.lblIdAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.lblNomAffiche_2 = QLabel(self.photoArea)
-        self.lblNomAffiche_2.setObjectName(u"lblNomAffiche_2")
-        self.lblNomAffiche_2.setGeometry(QRect(270, 70, 171, 31))
-        self.lblNomAffiche_2.setFont(font1)
-        self.lblNomAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.lblPrenomAffiche_2 = QLabel(self.photoArea)
-        self.lblPrenomAffiche_2.setObjectName(u"lblPrenomAffiche_2")
-        self.lblPrenomAffiche_2.setGeometry(QRect(290, 120, 151, 31))
-        self.lblPrenomAffiche_2.setFont(font1)
-        self.lblPrenomAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.lblAdresseAffiche_2 = QLabel(self.photoArea)
-        self.lblAdresseAffiche_2.setObjectName(u"lblAdresseAffiche_2")
-        self.lblAdresseAffiche_2.setGeometry(QRect(90, 210, 351, 31))
-        self.lblAdresseAffiche_2.setFont(font1)
-        self.lblAdresseAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.lblMailAffiche_2 = QLabel(self.photoArea)
-        self.lblMailAffiche_2.setObjectName(u"lblMailAffiche_2")
-        self.lblMailAffiche_2.setGeometry(QRect(70, 240, 371, 31))
-        self.lblMailAffiche_2.setFont(font1)
-        self.lblMailAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.lblTelephoneAffiche_2 = QLabel(self.photoArea)
-        self.lblTelephoneAffiche_2.setObjectName(u"lblTelephoneAffiche_2")
-        self.lblTelephoneAffiche_2.setGeometry(QRect(110, 270, 331, 31))
-        self.lblTelephoneAffiche_2.setFont(font1)
-        self.lblTelephoneAffiche_2.setStyleSheet(u"color: rgb(255, 255, 255);")
-        self.table2 = QTableWidget(self.pagePassages)
-        if (self.table2.columnCount() < 3):
-            self.table2.setColumnCount(3)
-        brush = QBrush(QColor(0, 0, 0, 255))
-        brush.setStyle(Qt.SolidPattern)
-        __qtablewidgetitem = QTableWidgetItem()
-        __qtablewidgetitem.setFont(font1);
-        __qtablewidgetitem.setForeground(brush);
-        self.table2.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        __qtablewidgetitem1.setFont(font1);
-        __qtablewidgetitem1.setForeground(brush);
-        self.table2.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        __qtablewidgetitem2.setFont(font1);
-        __qtablewidgetitem2.setForeground(brush);
-        self.table2.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        self.table2.setObjectName(u"table2")
-        self.table2.setGeometry(QRect(300, 120, 301, 341))
-        self.table2.setStyleSheet(u"background-color:#2c313c;\n"
-"border-radius: 5px;")
-        self.barRecherche2 = QWidget(self.pagePassages)
-        self.barRecherche2.setObjectName(u"barRecherche2")
-        self.barRecherche2.setGeometry(QRect(300, 50, 771, 61))
-        self.barRecherche2.setStyleSheet(u"background-color:#2c313c;\n"
-"border-radius: 5px;")
-        self.input_Recherche2 = QLineEdit(self.barRecherche2)
-        self.input_Recherche2.setObjectName(u"input_Recherche2")
-        self.input_Recherche2.setGeometry(QRect(180, 10, 581, 41))
-        self.input_Recherche2.setStyleSheet(u"background:#1b1b27;\n"
-" padding: 5px 10px;\n"
-" border-radius: 5px;")
-        self.BtnRecherche2 = QPushButton(self.barRecherche2)
-        self.BtnRecherche2.setObjectName(u"BtnRecherche2")
-        self.BtnRecherche2.setGeometry(QRect(10, 10, 151, 41))
-        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.BtnRecherche2.sizePolicy().hasHeightForWidth())
-        self.BtnRecherche2.setSizePolicy(sizePolicy4)
-        font4 = QFont()
-        font4.setPointSize(16)
-        self.BtnRecherche2.setFont(font4)
-        self.BtnRecherche2.setStyleSheet(u"border-radius: 5px;\n"
-"background: green;\n"
-"color: white;")
-        icon16 = QIcon()
-        icon16.addFile(u":/icons/search.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.BtnRecherche2.setIcon(icon16)
-        self.BtnRecherche2.setIconSize(QSize(24, 24))
-        self.label_22 = QLabel(self.pagePassages)
-        self.label_22.setObjectName(u"label_22")
-        self.label_22.setGeometry(QRect(30, 10, 172, 21))
-        self.label_22.setFont(font2)
-        self.label_22.setAlignment(Qt.AlignCenter)
-        self.mainPages.addWidget(self.pagePassages)
         self.page_gestion = QWidget()
         self.page_gestion.setObjectName(u"page_gestion")
         self.label_11 = QLabel(self.page_gestion)
@@ -705,13 +542,15 @@ class Ui_MainWindow(object):
         self.BtnSupp = QPushButton(self.widget)
         self.BtnSupp.setObjectName(u"BtnSupp")
         self.BtnSupp.setGeometry(QRect(250, 20, 201, 41))
+        font4 = QFont()
+        font4.setPointSize(16)
         self.BtnSupp.setFont(font4)
         self.BtnSupp.setStyleSheet(u"border-radius: 5px;\n"
 "background: #FF0000;\n"
 "color: white;")
-        icon17 = QIcon()
-        icon17.addFile(u":/icons/trash-2.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.BtnSupp.setIcon(icon17)
+        icon15 = QIcon()
+        icon15.addFile(u":/icons/trash-2.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnSupp.setIcon(icon15)
         self.BtnSupp.setIconSize(QSize(24, 24))
         self.BtnModif = QPushButton(self.widget)
         self.BtnModif.setObjectName(u"BtnModif")
@@ -720,9 +559,9 @@ class Ui_MainWindow(object):
         self.BtnModif.setStyleSheet(u"border-radius: 5px;\n"
 "background: #0080ff;\n"
 "color: white;")
-        icon18 = QIcon()
-        icon18.addFile(u":/icons/edit.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.BtnModif.setIcon(icon18)
+        icon16 = QIcon()
+        icon16.addFile(u":/icons/edit.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnModif.setIcon(icon16)
         self.BtnModif.setIconSize(QSize(24, 24))
         self.BtnActualiser = QPushButton(self.widget)
         self.BtnActualiser.setObjectName(u"BtnActualiser")
@@ -731,7 +570,7 @@ class Ui_MainWindow(object):
         self.BtnActualiser.setStyleSheet(u"border-radius: 5px;\n"
 "background: gray;\n"
 "color: white;")
-        self.BtnActualiser.setIcon(icon5)
+        self.BtnActualiser.setIcon(icon4)
         self.BtnActualiser.setIconSize(QSize(24, 24))
         self.barRecherche = QWidget(self.page_gestion)
         self.barRecherche.setObjectName(u"barRecherche")
@@ -747,45 +586,52 @@ class Ui_MainWindow(object):
         self.BtnRecherche = QPushButton(self.barRecherche)
         self.BtnRecherche.setObjectName(u"BtnRecherche")
         self.BtnRecherche.setGeometry(QRect(20, 10, 201, 41))
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.BtnRecherche.sizePolicy().hasHeightForWidth())
         self.BtnRecherche.setSizePolicy(sizePolicy4)
         self.BtnRecherche.setFont(font4)
         self.BtnRecherche.setStyleSheet(u"border-radius: 5px;\n"
 "background: green;\n"
 "color: white;")
-        self.BtnRecherche.setIcon(icon16)
+        icon17 = QIcon()
+        icon17.addFile(u":/icons/search.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnRecherche.setIcon(icon17)
         self.BtnRecherche.setIconSize(QSize(24, 24))
         self.table = QTableWidget(self.page_gestion)
         if (self.table.columnCount() < 7):
             self.table.setColumnCount(7)
+        brush = QBrush(QColor(0, 0, 0, 255))
+        brush.setStyle(Qt.SolidPattern)
+        __qtablewidgetitem = QTableWidgetItem()
+        __qtablewidgetitem.setFont(font1);
+        __qtablewidgetitem.setForeground(brush);
+        self.table.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        __qtablewidgetitem1.setFont(font1);
+        __qtablewidgetitem1.setForeground(brush);
+        self.table.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        __qtablewidgetitem2.setFont(font1);
+        __qtablewidgetitem2.setForeground(brush);
+        self.table.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         __qtablewidgetitem3 = QTableWidgetItem()
         __qtablewidgetitem3.setFont(font1);
         __qtablewidgetitem3.setForeground(brush);
-        self.table.setHorizontalHeaderItem(0, __qtablewidgetitem3)
+        self.table.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
         __qtablewidgetitem4.setFont(font1);
         __qtablewidgetitem4.setForeground(brush);
-        self.table.setHorizontalHeaderItem(1, __qtablewidgetitem4)
+        self.table.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         __qtablewidgetitem5 = QTableWidgetItem()
         __qtablewidgetitem5.setFont(font1);
         __qtablewidgetitem5.setForeground(brush);
-        self.table.setHorizontalHeaderItem(2, __qtablewidgetitem5)
+        self.table.setHorizontalHeaderItem(5, __qtablewidgetitem5)
         __qtablewidgetitem6 = QTableWidgetItem()
         __qtablewidgetitem6.setFont(font1);
         __qtablewidgetitem6.setForeground(brush);
-        self.table.setHorizontalHeaderItem(3, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        __qtablewidgetitem7.setFont(font1);
-        __qtablewidgetitem7.setForeground(brush);
-        self.table.setHorizontalHeaderItem(4, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        __qtablewidgetitem8.setFont(font1);
-        __qtablewidgetitem8.setForeground(brush);
-        self.table.setHorizontalHeaderItem(5, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        __qtablewidgetitem9.setFont(font1);
-        __qtablewidgetitem9.setForeground(brush);
-        self.table.setHorizontalHeaderItem(6, __qtablewidgetitem9)
+        self.table.setHorizontalHeaderItem(6, __qtablewidgetitem6)
         self.table.setObjectName(u"table")
         self.table.setGeometry(QRect(331, 131, 701, 301))
         self.table.setStyleSheet(u"background-color:#2c313c;\n"
@@ -844,9 +690,9 @@ class Ui_MainWindow(object):
         self.BtnAjouter.setStyleSheet(u"border-radius: 5px;\n"
 "background: #00ff00;\n"
 "color: white;")
-        icon19 = QIcon()
-        icon19.addFile(u":/icons/file-text.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.BtnAjouter.setIcon(icon19)
+        icon18 = QIcon()
+        icon18.addFile(u":/icons/file-text.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnAjouter.setIcon(icon18)
         self.BtnAjouter.setIconSize(QSize(24, 24))
         self.BtnCharger = QPushButton(self.panel_Rec)
         self.BtnCharger.setObjectName(u"BtnCharger")
@@ -854,9 +700,9 @@ class Ui_MainWindow(object):
         self.BtnCharger.setStyleSheet(u"background: gray;\n"
 "color: white;\n"
 "")
-        icon20 = QIcon()
-        icon20.addFile(u":/icons/image.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.BtnCharger.setIcon(icon20)
+        icon19 = QIcon()
+        icon19.addFile(u":/icons/image.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.BtnCharger.setIcon(icon19)
         self.BtnCharger.setIconSize(QSize(16, 16))
         self.mainPages.addWidget(self.page_gestion)
 
@@ -894,7 +740,7 @@ class Ui_MainWindow(object):
 
         self.closeRightMenuBtn = QPushButton(self.frame_8)
         self.closeRightMenuBtn.setObjectName(u"closeRightMenuBtn")
-        self.closeRightMenuBtn.setIcon(icon9)
+        self.closeRightMenuBtn.setIcon(icon8)
         self.closeRightMenuBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_9.addWidget(self.closeRightMenuBtn, 0, Qt.AlignRight)
@@ -980,9 +826,9 @@ class Ui_MainWindow(object):
 
         self.closeNotificationBtn = QPushButton(self.frame_9)
         self.closeNotificationBtn.setObjectName(u"closeNotificationBtn")
-        icon21 = QIcon()
-        icon21.addFile(u":/icons/x-octagon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.closeNotificationBtn.setIcon(icon21)
+        icon20 = QIcon()
+        icon20.addFile(u":/icons/x-octagon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.closeNotificationBtn.setIcon(icon20)
         self.closeNotificationBtn.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_10.addWidget(self.closeNotificationBtn, 0, Qt.AlignRight)
@@ -1030,33 +876,6 @@ class Ui_MainWindow(object):
 
 
         self.horizontalLayout.addWidget(self.mainBodyContainer)
-        
-        
-        
-        
-############################################### BTN CLICKED ###################################################
-###############################################################################################################
-###############################################################################################################
-
-        self.BtnCharger.clicked.connect(self.loadImage)
-        self.BtnAjouter.clicked.connect(self.insert)
-        self.BtnModif.clicked.connect(self.edit)
-        self.validerBtn.clicked.connect(self.editAccount)
-        self.BtnSupp.clicked.connect(self.delete)
-        self.table.cellClicked.connect(self.handle_cell_clicked)
-        self.table2.cellClicked.connect(self.handle_cell_clicked2)
-        self.BtnRecherche.clicked.connect(self.search)
-        self.BtnRecherche2.clicked.connect(self.search2)
-        self.chargerBdBtn.clicked.connect(self.chargerBd)
-        self.ligne = self.table.cellClicked.connect(self.on_cell_clicked)
-        self.BtnActualiser.clicked.connect(self.reflesh)
-        self.videoBtn.clicked.connect(self.getFace)
-        
-        self.showTableData()
-        self.showTableData2()
-     
-        
-        
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -1068,468 +887,6 @@ class Ui_MainWindow(object):
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
-    
-    
-    def chargerBd(self):
-        # Afficher le GIF
-        self.labelGif.setVisible(True)
-        
-        self.worker = Worker()
-        self.worker.finished.connect(self.onFinished)
-        self.worker.start()
-
-    def onFinished(self):
-        self.labelGif.setVisible(False)
-    
-    ###################################################################################################################
-    ############################################### FACE RECOGNITION ########################################################
-    
-    def record(self,identity,D_H):
-        # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        identity = str(identity)
-        cur.execute("select id_Pers from Personnes where prenom = (?)", (identity,))
-        con.commit()
-        RqtResult = cur.fetchall()
-        cur.execute("insert into Passages (dateHeure,ID_Pers)values (?,?)", (D_H, RqtResult[0][0]),)
-        con.commit()   
-        #RqtResult = cur.fetchall()
-        con.close()
-                
-    def getFace(self):
-        # HaarCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-        HaarCascade = cv2.CascadeClassifier(cv2.samples.findFile(cv2.data.haarcascades + 'haarcascade_frontalface_alt.xml'))
-        #MyFaceNet = load_model("facenet_keras.h5")
-
-
-        myfile = open("data.pkl", "rb")
-        database = pickle.load(myfile)
-        myfile.close()
-
-        cap = cv2.VideoCapture(0)
-
-        detected_identities = []
-        # À l'extérieur de la boucle principale, initialisez un compteur pour créer des noms de fichiers uniques
-        unknown_counter = 1
-
-    
-        while True:
-            _, gbr1 = cap.read()
-
-            wajah = HaarCascade.detectMultiScale(gbr1, 1.1, 4)
-
-            if len(wajah) > 0:
-                x1, y1, width, height = wajah[0]
-            else:
-                continue
-
-            x1, y1 = abs(x1), abs(y1)
-            x2, y2 = x1 + width, y1 + height
-
-            gbr = cv2.cvtColor(gbr1, cv2.COLOR_BGR2RGB)
-            gbr = Image.fromarray(gbr)
-            gbr_array = asarray(gbr)
-
-            face = gbr_array[y1:y2, x1:x2]
-
-            face = Image.fromarray(face)
-            face = face.resize((160, 160))
-            face = asarray(face)
-
-            face = face.astype('float32')
-            mean, std = face.mean(), face.std()
-            face = (face - mean) / std
-
-            signature = face_detector.face_detector(face)
-
-            min_dist = 100
-            identity = ' '
-            date_heure = datetime.datetime.now()
-            date_heure_texte = date_heure.strftime("%Y-%m-%d %H:%M:%S")
-
-            for key, value in database.items():
-                dist = np.linalg.norm(value - signature)
-                if dist < min_dist:
-                    min_dist = dist
-                    color = (0, 255, 0)
-                    identity = f"{key}"
-                    
-
-                    if identity not in detected_identities:
-                        detected_identities.append(identity)
-
-                    if identity != "non_reconnu":
-                        color = (0, 255, 0)
-                    else:
-                        color = (0, 0, 255)
-
-            cv2.putText(gbr1, identity, (100, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (color), 2, cv2.LINE_AA)
-            cv2.rectangle(gbr1, (x1, y1), (x2, y2), (color), 2)
-
-            cv2.imshow('res', gbr1)
-
-            # Vérifier si la liste detected_identities contient uniquement l'identité "non_reconnu" et prendre une photo
-            if len(detected_identities) == 1 and detected_identities[0] == "non_reconnu":
-                shoot_face_unknown = gbr1[y1:y2, x1:x2]
-                chemin_dossier = "Photo/"
-                img_item = f"{chemin_dossier}unknown_unknown_{time.time()}_face_{unknown_counter}.png"
-                # img_item = "sary_test.png"
-                cv2.imwrite(img_item, shoot_face_unknown)
-
-                # Incrémenter le compteur pour le prochain fichier
-                unknown_counter += 1
-                
-                self.record(identity,date_heure_texte)
-                # Pour activer le bouton
-                self.label_12.setText("Une personne vient de passer")
-                self.notificationBtn.setEnabled(True)
-                
-            else:
-                    
-                self.record(identity,date_heure_texte)
-                self.label_12.setText("Une personne vient de passer")
-                self.notificationBtn.setEnabled(True)
-            
-            detected_identities = []
-
-            k = cv2.waitKey(5) & 0xFF
-            if k == 27:
-                break
-
-        cv2.destroyAllWindows()
-        cap.release()
-    
-    ###################################################################################################################
-    ############################################### SHOW TABLE ########################################################    
-    
-    def showTableData2(self):
-         # Connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("select * from Passages")
-        con.commit()
-        RqtResult = cur.fetchall()
-        
-        self.table2.clearContents()
-        self.table2.setRowCount(0)
-        
-        for row_number, row_data in enumerate(RqtResult):
-            self.table2.insertRow(row_number)
-            for column_number, column_data in enumerate(row_data):
-                item = str(column_data)
-                self.table2.setItem(row_number, column_number, QTableWidgetItem(item))
-                
-        con.close()
-    
-    
-    def showTableData(self):
-        # Connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("select * from Personnes where id_Pers != 0")
-        con.commit()
-        RqtResult = cur.fetchall()
-        
-        self.table.clearContents()
-        self.table.setRowCount(0)
-        
-        # Définissez la hauteur de ligne fixe (par exemple, 100 pixels)
-        row_height = 100
-        
-        for row_number, row_data in enumerate(RqtResult):
-            
-            self.table.insertRow(row_number)
-            for column_number, column_data in enumerate(row_data):
-                item = str(column_data)
-                if column_number == 1:  # Colonne contenant les données binaires de l'image
-                    pixmap = QtGui.QPixmap()
-                    pixmap.loadFromData(column_data)
-                    label = QtWidgets.QLabel()
-                    label.setPixmap(pixmap)
-                    # Redimensionnez l'image pour qu'elle s'affiche à sa taille normale
-                    label.setScaledContents(True)
-                    # Encapsulez le QLabel dans un QWidget
-                    widget = QtWidgets.QWidget()
-                    layout = QtWidgets.QHBoxLayout()
-                    layout.addWidget(label)
-                    widget.setLayout(layout)
-                    self.table.setCellWidget(row_number, column_number, widget)
-                else:
-                    self.table.setItem(row_number, column_number, QTableWidgetItem(item))
-                    # Définissez la hauteur de la ligne
-                    self.table.setRowHeight(row_number, row_height)
-        con.close()
-
-        # Ajustez automatiquement la hauteur des lignes pour afficher les images en entier
-        # for row_number in range(self.table.rowCount()):
-        #     self.table.resizeRowToContents(row_number)
-    
-    #######################################################################################################
-    ############################################### SEARCH ################################################
-    def search(self):
-        search_term = self.input_Recherche.text()
-        found_rows = []
-        try:
-            search_value = int(search_term)
-            for row_number in range(self.table.rowCount()):
-                for column_number in range(self.table.columnCount()):
-                    item = self.table.item(row_number, column_number)
-                    if item and item.text().isdigit() and search_value == int(item.text()):
-                        found_rows.append(row_number)
-                        break
-        except ValueError:
-            for row_number in range(self.table.rowCount()):
-                found = False
-                for column_number in range(self.table.columnCount()):
-                    item = self.table.item(row_number, column_number)
-                    if item and search_term in item.text():
-                        found = True
-                        break
-                if found:
-                    found_rows.append(row_number)
-        
-        for row_number in range(self.table.rowCount()):
-            if row_number in found_rows:
-                self.table.showRow(row_number)
-            else:
-                self.table.hideRow(row_number)
-        
-        if not found_rows:
-            QMessageBox.information(self, "Information", "Aucune ligne trouvée avec la recherche : {}".format(search_term))
-            
-            
-    def search2(self):
-        search_term = self.input_Recherche2.text()
-        found_rows = []
-        try:
-            search_value = int(search_term)
-            for row_number in range(self.table2.rowCount()):
-                for column_number in range(self.table2.columnCount()):
-                    item = self.table2.item(row_number, column_number)
-                    if item and item.text().isdigit() and search_value == int(item.text()):
-                        found_rows.append(row_number)
-                        break
-        except ValueError:
-            for row_number in range(self.table2.rowCount()):
-                found = False
-                for column_number in range(self.table2.columnCount()):
-                    item = self.table2.item(row_number, column_number)
-                    if item and search_term in item.text():
-                        found = True
-                        break
-                if found:
-                    found_rows.append(row_number)
-        
-        for row_number in range(self.table2.rowCount()):
-            if row_number in found_rows:
-                self.table2.showRow(row_number)
-            else:
-                self.table2.hideRow(row_number)
-        
-        if not found_rows:
-            QMessageBox.information(self, "Information", "Aucune ligne trouvée avec la recherche : {}".format(search_term))
-    ###################################################################################################################
-    ############################################### handle_cell_clicked ########################################################
-    
-    def  handle_cell_clicked(self,row, column):
-        identifiant = self.table.item(row,0).text()
-        # photo = self.table.item(row,1).text()
-        nom = self.table.item(row,2).text()
-        prenom = self.table.item(row,3).text()
-        mail = self.table.item(row,4).text()
-        telephone = self.table.item(row,5).text()
-        adresse =self.table.item(row,6).text()
-        ohatra = self.table.item(row,6).text()
-        
-        #desplacement données
-        self.input_id_pers.setText(identifiant)
-        self.input_nom.setText(nom)
-        self.input_prenom.setText(prenom)
-        # self.input_photo.setText(photo)
-        self.input_mail.setText(mail)
-        self.input_telephone.setText(telephone)
-        self.input_adresse.setText(adresse)
-        self.input_adresse.setText(ohatra)
-        
-        
-    def  handle_cell_clicked2(self,row, column):
-        identifiant = self.table2.item(row,2).text()
-        
-        
-        # Connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("select * from Personnes where id_Pers =?",(identifiant,))
-        con.commit()
-        RqtResult = cur.fetchall()
-        
-        # photo = RqtResult[0][1]
-        photo_blob = RqtResult[0][1]
-        pixmap = QtGui.QPixmap()
-        pixmap.loadFromData(photo_blob)
-        self.labelPhotoAfficher.setScaledContents(True)
-        
-        nom = RqtResult[0][2]
-        prenom = RqtResult[0][3]
-        mail = RqtResult[0][4]
-        telephone = RqtResult[0][5]
-        adresse = RqtResult[0][6]
-        
-        #desplacement données
-        self.lblIdAffiche_2.setText(identifiant)
-        self.lblNomAffiche_2.setText(nom)
-        self.lblPrenomAffiche_2.setText(prenom)
-        self.lblAdresseAffiche_2.setText(adresse)
-        self.lblMailAffiche_2.setText(mail)
-        self.lblTelephoneAffiche_2.setText(telephone)
-        self.labelPhotoAfficher.setPixmap(pixmap)
-        
-    
-    #fonction recuperant ligne table    
-    def on_cell_clicked(self, row):
-        return row
-    #fonction actualisant la table    
-    def reflesh(self):
-        self.showTableData()
-########################################################### INSERT #########################################################
-############################################################################################################################
-############################################################################################################################
-    def insert(self):
-        identifiant = self.input_id_pers.text()
-        nom = self.input_nom.text()
-        prenom = self.input_prenom.text()
-        # photo = self.input_photo.text()
-        telephone = self.input_telephone.text()
-        mail = self.input_mail.text()
-        adresse = self.input_adresse.text()
-        
-        # Ouverture du fichier image et conversion en données binaires
-        with open(self.input_photo.text(), 'rb') as image_file:
-                image_binary = image_file.read()
-        
-
-        # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, image_binary, nom, prenom, mail, telephone, adresse))
-        con.commit()   
-        #RqtResult = cur.fetchall()
-        con.close()
-        self.label_12.setText("Ajout d'une personne")
-        self.input_id_pers.setText("")
-        self.input_nom.setText("")
-        self.input_prenom.setText("")
-        self.input_photo.setText("")
-        self.input_telephone.setText("")
-        self.input_mail.setText("")
-        self.input_adresse.setText("")
-        self.showTableData()
-        
-    ############################################################ EDIT ##########################################################
-    ############################################################################################################################
-    ############################################################################################################################
-    def editAccount(self):
-        userName = self.editUserName.text()
-        password = self.currentMdp.text()
-        newPassword = self.newMdp.text()
-        confirmNewPassword = self.confirmNewMdp.text()
-        
-        # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("select * from Login")
-        
-        RqtResult = cur.fetchall()
-        
-        oldPassword = RqtResult[0][2]
-        
-        print(f" current:{password}, oldpass: {oldPassword}, newpass: {newPassword}, confirmpass: {confirmNewPassword}")
-        # print(RqtResult[0][2])
-        # print(newPassword)
-        
-        if userName == "":
-            userName = "Admin"
-        
-        if ((str(password) == str(oldPassword)) and (str(newPassword) == str(confirmNewPassword))):
-        
-            cur.execute("update Login set userName=?,password=?where Identifiant=?",
-            (userName, newPassword, 1))
-            self.label_12.setText("Compte mise à jours")
-            self.editUserName.setText("")
-            self.currentMdp.setText("")
-            self.newMdp.setText("")
-            self.confirmNewMdp.setText("")
-            
-        con.commit()
-        con.close()
-        
-        self.showTableData()
-        
-        
-    def edit(self):
-        identifiant = self.input_id_pers.text()
-        # photo = self.input_photo.text()
-        nom = self.input_nom.text()
-        prenom = self.input_prenom.text()
-        telephone = self.input_telephone.text()
-        mail = self.input_mail.text()
-        adresse = self.input_adresse.text()
-        
-        # Ouverture du fichier image et conversion en données binaires
-        with open(self.input_photo.text(), 'rb') as image_file:
-                image_binary = image_file.read()
-        
-        print(identifiant)
-        # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("update Personnes set id_Pers=?,photo=?,nom=?,prenom=?,mail=?,telephone=?,adresse=? where id_Pers=?",
-            (identifiant, image_binary, nom, prenom, mail, telephone, adresse,identifiant))
-        con.commit()
-        con.close()
-        
-        self.label_12.setText("Modification d'une personne")
-        self.input_id_pers.setText("")
-        self.input_nom.setText("")
-        self.input_prenom.setText("")
-        self.input_photo.setText("")
-        self.input_telephone.setText("")
-        self.input_mail.setText("")
-        self.input_adresse.setText("")
-        self.showTableData()
-    def delete(self):
-        
-        identifiant = self.input_id_pers.text()
-        # connexion à la base de données
-        con = sqlite3.connect('CamShoot.db')
-        cur = con.cursor()
-        cur.execute("delete from Personnes where id_Pers = ?",(identifiant,))
-        con.commit()   
-        con.close()
-        
-        self.label_12.setText("Suppression d'une personne")    
-        self.input_id_pers.setText("")
-        self.input_nom.setText("")
-        self.input_prenom.setText("")
-        self.input_photo.setText("")
-        self.input_telephone.setText("")
-        self.input_mail.setText("")
-        self.input_adresse.setText("")
-        self.showTableData()
-    
-####################################################################################################################
-
-################################################LOAD IMAGE##########################################################
-    def loadImage(self):   
-        FileName = QFileDialog.getOpenFileName(None, 'open file','E:\Photo_nathan\Albert.jpg')
-        self.input_photo.setText(FileName[0])
-    
-    
-    
-    
-    
-    
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
 #if QT_CONFIG(tooltip)
@@ -1541,15 +898,14 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.accueilBtn.setText(QCoreApplication.translate("MainWindow", u"Accueil", None))
 #if QT_CONFIG(tooltip)
-        self.gestionBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Gestion des personnels", None))
+        self.gestionBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Gestion des pesonnels", None))
 #endif // QT_CONFIG(tooltip)
         self.gestionBtn.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels ", None))
-        self.passageBtn.setText(QCoreApplication.translate("MainWindow", u"Gestion des passages", None))
 #if QT_CONFIG(tooltip)
-        self.videoBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Camera", None))
+        self.videoBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Imprimer", None))
 #endif // QT_CONFIG(tooltip)
-        self.videoBtn.setText(QCoreApplication.translate("MainWindow", u"Camera", None))
-        self.chargerBdBtn.setText(QCoreApplication.translate("MainWindow", u"Charger BD", None))
+        self.videoBtn.setText(QCoreApplication.translate("MainWindow", u"Imprimer", None))
+        self.chargerBdBtn.setText("")
         self.labelGif.setText("")
 #if QT_CONFIG(tooltip)
         self.parametreBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Param\u00e8tre", None))
@@ -1606,49 +962,27 @@ class Ui_MainWindow(object):
         self.closeBtn.setToolTip(QCoreApplication.translate("MainWindow", u"Close Window", None))
 #endif // QT_CONFIG(tooltip)
         self.closeBtn.setText("")
-        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Bienvenu \U0001F31D", None))
-        self.labelPhotoAfficher.setText("")
-        self.lblNomAffiche.setText(QCoreApplication.translate("MainWindow", u"Nom:", None))
-        self.lblPrenomAffiche.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9nom:", None))
-        self.lblAdresseAffiche.setText(QCoreApplication.translate("MainWindow", u"Adresse:", None))
-        self.lblMailAffiche.setText(QCoreApplication.translate("MainWindow", u"Mail:", None))
-        self.lblIdAffiche.setText(QCoreApplication.translate("MainWindow", u"Identifiant:", None))
-        self.lblTelephoneAffiche.setText(QCoreApplication.translate("MainWindow", u"T\u00e9l\u00e9phone:", None))
-        self.lblIdAffiche_2.setText("")
-        self.lblNomAffiche_2.setText("")
-        self.lblPrenomAffiche_2.setText("")
-        self.lblAdresseAffiche_2.setText("")
-        self.lblMailAffiche_2.setText("")
-        self.lblTelephoneAffiche_2.setText("")
-        ___qtablewidgetitem = self.table2.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Identifiant", None));
-        ___qtablewidgetitem1 = self.table2.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Date et Heure", None));
-        ___qtablewidgetitem2 = self.table2.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Id du passant", None));
-        self.input_Recherche2.setPlaceholderText(QCoreApplication.translate("MainWindow", u"recherchez ici", None))
-        self.BtnRecherche2.setText(QCoreApplication.translate("MainWindow", u"Rechercher", None))
-        self.label_22.setText(QCoreApplication.translate("MainWindow", u"Gestion des passages", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"Accueil", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Gestion des personnels", None))
         self.BtnSupp.setText(QCoreApplication.translate("MainWindow", u"Supprimer", None))
         self.BtnModif.setText(QCoreApplication.translate("MainWindow", u"Modifier", None))
         self.BtnActualiser.setText(QCoreApplication.translate("MainWindow", u"Actualiser", None))
         self.input_Recherche.setPlaceholderText(QCoreApplication.translate("MainWindow", u"recherchez ici", None))
         self.BtnRecherche.setText(QCoreApplication.translate("MainWindow", u"Rechercher", None))
-        ___qtablewidgetitem3 = self.table.horizontalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Identifiant", None));
-        ___qtablewidgetitem4 = self.table.horizontalHeaderItem(1)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Photo", None));
-        ___qtablewidgetitem5 = self.table.horizontalHeaderItem(2)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Nom", None));
-        ___qtablewidgetitem6 = self.table.horizontalHeaderItem(3)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9nom", None));
-        ___qtablewidgetitem7 = self.table.horizontalHeaderItem(4)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Mail", None));
-        ___qtablewidgetitem8 = self.table.horizontalHeaderItem(5)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"T\u00e9l\u00e9phone", None));
-        ___qtablewidgetitem9 = self.table.horizontalHeaderItem(6)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Adresse", None));
+        ___qtablewidgetitem = self.table.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Identifiant", None));
+        ___qtablewidgetitem1 = self.table.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Photo", None));
+        ___qtablewidgetitem2 = self.table.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Nom", None));
+        ___qtablewidgetitem3 = self.table.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Pr\u00e9nom", None));
+        ___qtablewidgetitem4 = self.table.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Mail", None));
+        ___qtablewidgetitem5 = self.table.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"T\u00e9l\u00e9phone", None));
+        ___qtablewidgetitem6 = self.table.horizontalHeaderItem(6)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Adresse", None));
         self.input_id_pers.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Identifiant", None))
         self.input_nom.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Nom", None))
         self.input_prenom.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Prenom", None))
