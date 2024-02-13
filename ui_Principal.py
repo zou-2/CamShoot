@@ -578,32 +578,32 @@ class Ui_MainWindow(object):
         self.lblNomAffiche.setObjectName(u"lblNomAffiche")
         self.lblNomAffiche.setGeometry(QRect(230, 70, 31, 31))
         self.lblNomAffiche.setFont(font1)
-        self.lblNomAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblNomAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblPrenomAffiche = QLabel(self.photoArea)
         self.lblPrenomAffiche.setObjectName(u"lblPrenomAffiche")
         self.lblPrenomAffiche.setGeometry(QRect(230, 120, 51, 31))
         self.lblPrenomAffiche.setFont(font1)
-        self.lblPrenomAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblPrenomAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblAdresseAffiche = QLabel(self.photoArea)
         self.lblAdresseAffiche.setObjectName(u"lblAdresseAffiche")
         self.lblAdresseAffiche.setGeometry(QRect(30, 210, 51, 31))
         self.lblAdresseAffiche.setFont(font1)
-        self.lblAdresseAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblAdresseAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblMailAffiche = QLabel(self.photoArea)
         self.lblMailAffiche.setObjectName(u"lblMailAffiche")
         self.lblMailAffiche.setGeometry(QRect(30, 240, 31, 31))
         self.lblMailAffiche.setFont(font1)
-        self.lblMailAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblMailAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblIdAffiche = QLabel(self.photoArea)
         self.lblIdAffiche.setObjectName(u"lblIdAffiche")
         self.lblIdAffiche.setGeometry(QRect(230, 30, 61, 31))
         self.lblIdAffiche.setFont(font1)
-        self.lblIdAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblIdAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblTelephoneAffiche = QLabel(self.photoArea)
         self.lblTelephoneAffiche.setObjectName(u"lblTelephoneAffiche")
         self.lblTelephoneAffiche.setGeometry(QRect(30, 270, 71, 31))
         self.lblTelephoneAffiche.setFont(font1)
-        self.lblTelephoneAffiche.setStyleSheet(u"color: rgb(0, 0, 0);")
+        self.lblTelephoneAffiche.setStyleSheet(u"color: rgb(255, 255, 255);text-decoration: underline;")
         self.lblIdAffiche_2 = QLabel(self.photoArea)
         self.lblIdAffiche_2.setObjectName(u"lblIdAffiche_2")
         self.lblIdAffiche_2.setGeometry(QRect(300, 30, 141, 31))
@@ -1184,13 +1184,14 @@ class Ui_MainWindow(object):
                 # Pour activer le bouton
                 self.label_12.setText("Une personne vient de passer")
                 self.notificationBtn.setEnabled(True)
-                
+                self.showTableData2()
             else:
                     
                 self.record(identity,date_heure_texte)
                 self.label_12.setText("Une personne vient de passer")
                 self.notificationBtn.setEnabled(True)
-            
+                self.showTableData2()
+
             detected_identities = []
 
             k = cv2.waitKey(5) & 0xFF
@@ -1375,14 +1376,16 @@ class Ui_MainWindow(object):
         mail = RqtResult[0][4]
         telephone = RqtResult[0][5]
         adresse = RqtResult[0][6]
-        
-        #desplacement données
+        # print(mail)
+        # print(telephone)
+        # print(adresse)
+        #deplacement données
         self.lblIdAffiche_2.setText(identifiant)
         self.lblNomAffiche_2.setText(nom)
         self.lblPrenomAffiche_2.setText(prenom)
         self.lblAdresseAffiche_2.setText(adresse)
         self.lblMailAffiche_2.setText(mail)
-        self.lblTelephoneAffiche_2.setText(telephone)
+        self.lblTelephoneAffiche_2.setText(str(telephone))
         self.labelPhotoAfficher.setPixmap(pixmap)
         
     
@@ -1412,7 +1415,7 @@ class Ui_MainWindow(object):
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
         cur = con.cursor()
-        cur.execute("insert into Personnes (id_Pers,photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?,?)", (identifiant, image_binary, nom, prenom, mail, telephone, adresse))
+        cur.execute("insert into Personnes (photo,nom,prenom,mail,telephone,adresse)values (?,?,?,?,?,?)", ( image_binary, nom, prenom, mail, telephone, adresse))
         con.commit()   
         #RqtResult = cur.fetchall()
         con.close()
@@ -1498,8 +1501,8 @@ class Ui_MainWindow(object):
         self.input_mail.setText("")
         self.input_adresse.setText("")
         self.showTableData()
-    def delete(self):
         
+    def delete(self):
         identifiant = self.input_id_pers.text()
         # connexion à la base de données
         con = sqlite3.connect('CamShoot.db')
